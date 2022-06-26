@@ -1,29 +1,15 @@
 import { defineStore } from "pinia"
 
-// useStore could be anything like useUser, useCart
-// the first argument is a unique id of the store across your application
+import boardsData from "../mockdata/boards.json"
+
 export const useStore = defineStore("main", {
-    state: () => ({
-        // all these properties will have their type inferred automatically
-        counter: 0,
-        name: "Eduardo",
-        isAdmin: true,
-    }),
+  state: () => ({
+    boards: boardsData,
+  }),
 
-    getters: {
-        getCount(state) {
-            return state.counter
-        },
+  getters: {
+    getBoards: (state) => state.boards,
+  },
 
-        getCountTimesTwo: (state) => state.counter * 2
-    },
-
-    actions: {
-        increment() {
-            this.counter++
-        },
-        randomizeCounter() {
-            this.counter = Math.round(100 * Math.random())
-        },
-    },
+  actions: {},
 })
