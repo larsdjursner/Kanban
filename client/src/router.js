@@ -4,18 +4,13 @@ const routes = [
   {
     path: "/",
     redirect: {
-      name: "kanban",
+      name: "board",
     },
   },
   {
-    path: "/kanban",
-    name: "kanban",
+    path: "/board/:id",
+    name: "board",
     component: () => import("./pages/KanbanBoard.vue"),
-  },
-  {
-    path: "/test",
-    name: "test",
-    component: () => import("./pages/Testpage.vue"),
   },
 ]
 
