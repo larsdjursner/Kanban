@@ -34,7 +34,7 @@ export const useStore = defineStore("main", {
         id: this.boards.length + 1,
         ...board,
       }
-      this.boards = [_board, ...this.boards]
+      this.boards = [...this.boards, _board]
 
       return _board
     },

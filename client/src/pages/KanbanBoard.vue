@@ -82,13 +82,13 @@ export default {
       () => this.$route.params,
       ({ id }) => {
         this.store.setCurrentBoard(id)
-        this.scrollToBoard(id)
+        // this.scrollToBoard(id)
       }
     )
   },
 
   methods: {
-    addBoard(board) {
+    async addBoard(board) {
       // implement proper validation
       if (board.title.length === 0) {
         return
@@ -97,6 +97,8 @@ export default {
       const { id } = this.store.addBoard(board)
 
       this.$router.replace({ name: "board", params: { id } })
+
+      this.$nextTick(() => this.scrollToBoard(id))
     },
 
     appendAnimations() {
