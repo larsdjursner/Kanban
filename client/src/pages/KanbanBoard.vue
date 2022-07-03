@@ -1,45 +1,46 @@
 <template>
-  <div class="max-w-screen max-h-screen w-screen h-screen flex">
-    <Modal :show-modal="showModal" @closeModal="showModal = false">
-      <template #content> </template>
-    </Modal>
-
+  <div class="max-w-screen max-h-screen w-screen h-screen flex bg-slate-700">
+    <BoardModal
+      :show-modal="showModal"
+      @closeModal="showModal = false"
+      @addBoard="(board) => addBoard(board)"
+    />
     <Drawer>
       <template #header>
-        <p class="w-full h-full text-2xl font-bold">Kanban Board</p>
+        <p class="w-full h-full text-2xl font-bold px-6">Kanban</p>
       </template>
 
-      <template #button>
-        <div class="w-full h-10 flex justify-center pt-2">
-          <button
-            class="font-bold text-lg bg-teal-400 hover:bg-teal-300 focus:bg-teal-300 rounded-lg border px-2"
-            @click="showModal = true"
-          >
-            Add board
-          </button>
-        </div>
-      </template>
       <template #content>
-        <ul class="h-full overflow-y-scroll scrollbar flex flex-col">
-          <BoardListItem
-            v-for="board in store.getBoards"
-            :key="board.id"
-            :board="board"
-            :is-current-board="store.getCurrentBoard.id === board.id"
-          />
-        </ul>
+        <div class="flex flex-col h-full">
+          <p class="self-center text-sm">
+            {{ `All boards ( ${store.getBoardAmount} )` }}
+          </p>
+
+          <ul
+            ref="list"
+            class="h-full overflow-y-scroll overflow-x-hidden scrollbar-dark dark:scrollbar flex flex-col py-2 pr-2 my-2 rounded-xl bg-slate-600"
+          >
+            <BoardListItem
+              v-for="board in store.getBoards"
+              :key="'board-' + board.id"
+              :ref="'board-' + board.id"
+              :board="board"
+            />
+          </ul>
+
+          <NewBoard @addBoard="showModal = true" />
+        </div>
       </template>
     </Drawer>
 
     <div class="flex flex-col flex-1 max-h-full max-w-full w-full h-full">
       <Navbar />
 
-      <div class="p-4 h-full w-full overflox-x-scroll">
+      <div class="h-full w-full overflox-x-scroll">
+        <div class="p-4 h-full w-full bg-slate-500">content</div>
         <!-- <Block /> -->
       </div>
     </div>
-
-    <!-- Main content -->
   </div>
 </template>
 
@@ -49,7 +50,9 @@ import BoardListItem from "../components/BoardListItem.vue"
 import { useStore } from "../stores/store"
 import Navbar from "../components/Navbar.vue"
 import Block from "../components/Block.vue"
-import Modal from "../components/Modal.vue"
+import BoardModal from "../components/modals/BoardModal.vue"
+import { animate, stagger } from "motion"
+import NewBoard from "../components/NewBoard.vue"
 
 export default {
   components: {
@@ -57,7 +60,8 @@ export default {
     BoardListItem,
     Navbar,
     Block,
-    Modal,
+    BoardModal,
+    NewBoard,
   },
 
   data: () => ({
@@ -68,19 +72,48 @@ export default {
   created() {
     this.store.fetchBoards()
     this.store.setCurrentBoard(this.$route.params.id)
+  },
+
+  mounted() {
+    this.appendAnimations()
+    this.scrollToBoard(this.$route.params.id)
 
     this.$watch(
       () => this.$route.params,
       ({ id }) => {
         this.store.setCurrentBoard(id)
+        this.scrollToBoard(id)
       }
     )
   },
 
   methods: {
-    addBoard() {
-      // activate modal to create board
-      // some smooth transition into view
+    addBoard(board) {
+      // implement proper validation
+      if (board.title.length === 0) {
+        return
+      }
+
+      const { id } = this.store.addBoard(board)
+
+      this.$router.replace({ name: "board", params: { id } })
+    },
+
+    appendAnimations() {
+      const { list } = this.$refs
+
+      animate(list, { opacity: [0, 1] }, { delay: 0.3 })
+      animate(list.children, { opacity: [0, 0.2, 1] }, { delay: stagger(0.1) })
+    },
+
+    scrollToBoard(id) {
+      // window.HTMLElement.prototype.scrollIntoView = function () {}
+      const el = this.$refs["board-" + id]
+      // console.log(el[0].$el)
+      el[0].$el.scrollIntoView({ behavior: "smooth" })
+      // this.$nextTick(() => el.$el.scrollIntoView())
+
+      // el?.scrollIntoView({ behavior: "smooth" })
     },
   },
 }

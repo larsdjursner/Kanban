@@ -7,7 +7,7 @@
       :exit="{ opacity: 0 }"
       class="z-50"
     >
-      <div class="fixed z-50 h-full w-full bg-slate-700/60" @click="closeModal">
+      <div class="fixed z-50 h-full w-full bg-slate-700/90" @click="closeModal">
         <div
           class="fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 h-1/2 w-1/2"
           @click.stop
@@ -18,10 +18,26 @@
               :animate="{ opacity: 1, scale: 1 }"
               :exit="{ opacity: 0, scale: 0.6 }"
             >
-              <div class="flex flex-col gap-8 rounded-xl bg-white px-6 py-2">
+              <div
+                class="flex flex-col gap-8 rounded-xl dark:bg-white bg-slate-500 overflow-hidden"
+              >
                 <div class="flex flex-col">
-                  <button class="self-end" @click="closeModal">x</button>
+                  <!-- header -->
+                  <div class="flex border-b border-slate-400 m-2 p-2">
+                    <p class="font-semibold text-slate-300 text-xl">
+                      <slot name="header" />
+                    </p>
+                    <span class="flex-1" />
+                    <button class="" @click="closeModal">x</button>
+                  </div>
+
+                  <!-- content -->
                   <slot name="content" />
+
+                  <!-- footer -->
+                  <div class="mt-4">
+                    <slot name="footer" />
+                  </div>
                 </div>
               </div>
             </Motion>

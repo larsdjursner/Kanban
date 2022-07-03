@@ -11,6 +11,8 @@ export const useStore = defineStore("main", {
   getters: {
     getBoards: (state) => state.boards,
 
+    getBoardAmount: (state) => state.boards.length,
+
     getCurrentBoard: (state) => state.currentBoard,
   },
 
@@ -25,6 +27,16 @@ export const useStore = defineStore("main", {
       }
       // fetch
       this.currentBoard = this.boards.find((board) => board.id === id)
+    },
+
+    addBoard(board) {
+      const _board = {
+        id: this.boards.length + 1,
+        ...board,
+      }
+      this.boards = [_board, ...this.boards]
+
+      return _board
     },
   },
 })
