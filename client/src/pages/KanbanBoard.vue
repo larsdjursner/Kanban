@@ -82,7 +82,6 @@ export default {
       () => this.$route.params,
       ({ id }) => {
         this.store.setCurrentBoard(id)
-        // this.scrollToBoard(id)
       }
     )
   },
@@ -90,7 +89,7 @@ export default {
   methods: {
     async addBoard(board) {
       // implement proper validation
-      if (board.title.length === 0) {
+      if (board.name.length === 0) {
         return
       }
 
@@ -109,13 +108,8 @@ export default {
     },
 
     scrollToBoard(id) {
-      // window.HTMLElement.prototype.scrollIntoView = function () {}
-      const el = this.$refs["board-" + id]
-      // console.log(el[0].$el)
-      el[0].$el.scrollIntoView({ behavior: "smooth" })
-      // this.$nextTick(() => el.$el.scrollIntoView())
-
-      // el?.scrollIntoView({ behavior: "smooth" })
+      const el = this.$refs["board-" + id][0].$el
+      el.scrollIntoView({ behavior: "smooth" })
     },
   },
 }

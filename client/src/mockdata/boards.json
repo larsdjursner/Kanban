@@ -1,78 +1,78 @@
 [
   {
     "id": 1,
-    "title": "Marketing"
+    "name": "Marketing"
   },
   {
     "id": 2,
-    "title": "Support"
+    "name": "Support"
   },
   {
     "id": 3,
-    "title": "Research and Development"
+    "name": "Research and Development"
   },
   {
     "id": 4,
-    "title": "Sales"
+    "name": "Sales"
   },
   {
     "id": 5,
-    "title": "Accounting"
+    "name": "Accounting"
   },
   {
     "id": 6,
-    "title": "Business Development"
+    "name": "Business Development"
   },
   {
     "id": 7,
-    "title": "Accounting"
+    "name": "Accounting"
   },
   {
     "id": 8,
-    "title": "Accounting"
+    "name": "Accounting"
   },
   {
     "id": 9,
-    "title": "Research and Development"
+    "name": "Research and Development"
   },
   {
     "id": 10,
-    "title": "Services"
+    "name": "Services"
   },
   {
     "id": 11,
-    "title": "Accounting"
+    "name": "Accounting"
   },
   {
     "id": 12,
-    "title": "Human Resources"
+    "name": "Human Resources"
   },
   {
     "id": 13,
-    "title": "Research and Development"
+    "name": "Research and Development"
   },
   {
     "id": 14,
-    "title": "Research and Development"
+    "name": "Research and Development"
   },
   {
     "id": 15,
-    "title": "Research and Development"
+    "name": "Research and Development"
   },
   {
     "id": 16,
-    "title": "Human Resources"
+    "name": "Human Resources"
   },
   {
     "id": 17,
-    "title": "Sales"
+    "name": "Sales"
   },
   {
     "id": 18,
-    "title": "Accounting"
+    "name": "Accounting"
   },
   {
     "id": 19,
-    "title": "Product Management"
+    "name": "Product Management"
   }
 ]

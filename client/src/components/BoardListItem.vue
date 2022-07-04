@@ -10,7 +10,7 @@
         class="font-semibold w-full"
         :class="isCurrentlySelected ? 'text-white' : 'text-slate-300'"
       >
-        {{ board.title }}
+        {{ board.name }}
       </p>
     </div>
   </router-link>

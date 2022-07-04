@@ -3,7 +3,7 @@
     class="w-full max h-14 border-b-2 p-2 flex items-baseline justify-between bg-slate-700"
   >
     <p class="text-xl font-semibold text-slate-300">
-      {{ store.currentBoard.title }}
+      {{ store.currentBoard.name }}
     </p>
     <!-- <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden"
       >Open drawer</label

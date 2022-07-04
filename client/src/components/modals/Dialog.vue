@@ -1,15 +1,15 @@
 <template>
   <Presence>
     <Motion
-      v-show="showModal"
+      v-show="showDialog"
       :initial="{ opacity: 0 }"
       :animate="{ opacity: 1 }"
       :exit="{ opacity: 0 }"
       class="z-50"
     >
-      <div class="fixed z-50 h-full w-full bg-black/70" @click="closeModal">
+      <div class="fixed z-50 h-full w-full bg-black/60" @click="closeDialog">
         <div
-          class="fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 h-1/2 w-1/2"
+          class="fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2"
           @click.stop
         >
           <Presence>
@@ -27,8 +27,6 @@
                     <p class="font-semibold text-slate-300 text-xl">
                       <slot name="header" />
                     </p>
-                    <span class="flex-1" />
-                    <button class="" @click="closeModal">x</button>
                   </div>
 
                   <!-- content -->
@@ -55,17 +53,17 @@ export default {
   components: { Presence, Motion },
 
   props: {
-    showModal: {
+    showDialog: {
       type: Boolean,
       default: false,
     },
   },
 
-  emits: ["closeModal"],
+  emits: ["closeDialog"],
 
   methods: {
-    closeModal() {
-      this.$emit("closeModal")
+    closeDialog() {
+      this.$emit("closeDialog")
     },
   },
 }
