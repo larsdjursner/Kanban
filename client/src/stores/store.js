@@ -1,7 +1,5 @@
 import { defineStore } from "pinia"
 
-import boardsData from "../mockdata/boards.json"
-
 export const useStore = defineStore("main", {
   state: () => ({
     boards: [],
@@ -17,26 +15,16 @@ export const useStore = defineStore("main", {
   },
 
   actions: {
-    fetchBoards() {
-      this.boards = boardsData
+    setBoards(boards) {
+      this.boards = boards
     },
 
-    setCurrentBoard(id) {
-      if (typeof id !== Number) {
-        id = parseInt(id, 10)
-      }
-      // fetch
-      this.currentBoard = this.boards.find((board) => board.id === id)
+    setCurrentBoard(board) {
+      this.currentBoard = board
     },
 
     addBoard(board) {
-      const _board = {
-        id: this.boards.length + 1,
-        ...board,
-      }
-      this.boards = [...this.boards, _board]
-
-      return _board
+      this.boards = [...this.boards, board]
     },
   },
 })

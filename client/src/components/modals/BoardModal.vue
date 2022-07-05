@@ -10,6 +10,16 @@
           v-model="board.name"
           class="bg-slate-300 w-3/4 h-10 rounded-lg py-2 px-6"
           placeholder="Enter a board name..."
+          required
+        />
+      </div>
+
+      <div class="flex justify-between items-baseline px-4 py-8">
+        <p class="font-semibold text-md">Board description</p>
+        <input
+          v-model="board.description"
+          class="bg-slate-300 w-3/4 h-10 rounded-lg py-2 px-6"
+          placeholder="Enter a board name..."
         />
       </div>
     </template>

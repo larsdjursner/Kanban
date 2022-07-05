@@ -34,7 +34,7 @@ export default {
 
   computed: {
     isCurrentlySelected() {
-      return this.store.getCurrentBoard.id === this.board.id
+      return parseInt(this.$route.params.id) === this.board.id
     },
   },
   methods: {

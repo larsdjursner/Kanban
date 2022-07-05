@@ -33,14 +33,7 @@
       </template>
     </Drawer>
 
-    <div class="flex flex-col flex-1 max-h-full max-w-full w-full h-full">
-      <Navbar />
-
-      <div class="h-full w-full overflox-x-scroll">
-        <div class="p-4 h-full w-full bg-slate-500">content</div>
-        <!-- <Block /> -->
-      </div>
-    </div>
+    <BoardContent :id="parseInt($route.params.id)" />
   </div>
 </template>
 
@@ -53,6 +46,7 @@ import Block from "../components/Block.vue"
 import BoardModal from "../components/modals/BoardModal.vue"
 import { animate, stagger } from "motion"
 import NewBoard from "../components/NewBoard.vue"
+import BoardContent from "../components/BoardContent.vue"
 
 export default {
   components: {
@@ -62,6 +56,7 @@ export default {
     Block,
     BoardModal,
     NewBoard,
+    BoardContent,
   },
 
   data: () => ({
@@ -69,14 +64,15 @@ export default {
     showModal: false,
   }),
 
-  created() {
-    this.store.fetchBoards()
-    this.store.setCurrentBoard(this.$route.params.id)
+  async created() {
+    await this.fetchBoard()
+    await this.fetchBoards()
+    // this.store.setCurrentBoard(this.$route.params.id)
   },
 
   mounted() {
-    this.appendAnimations()
-    this.scrollToBoard(this.$route.params.id)
+    // this.appendAnimations()
+    // this.scrollToBoard(this.$route.params.id)
 
     this.$watch(
       () => this.$route.params,
@@ -87,17 +83,30 @@ export default {
   },
 
   methods: {
+    async fetchBoards() {
+      await this.$http.get("/boards").then(({ data }) => {
+        this.store.setBoards(data)
+        this.appendAnimations()
+      })
+    },
+
+    async fetchBoard() {
+      await this.$http
+        .get(`/boards/${this.$route.params.id}`)
+        .then(({ data }) => {
+          this.store.setCurrentBoard(data)
+        })
+    },
+
     async addBoard(board) {
-      // implement proper validation
-      if (board.name.length === 0) {
-        return
-      }
-
-      const { id } = this.store.addBoard(board)
-
-      this.$router.replace({ name: "board", params: { id } })
-
-      this.$nextTick(() => this.scrollToBoard(id))
+      await this.$http
+        .post("/boards", board)
+        .then(({ data }) => {
+          this.store.addBoard(data)
+          this.$router.replace({ name: "board", params: data.id })
+          this.$nextTick(() => this.scrollToBoard(data.id))
+        })
+        .catch((err) => console.log(err))
     },
 
     appendAnimations() {
@@ -108,8 +117,9 @@ export default {
     },
 
     scrollToBoard(id) {
-      const el = this.$refs["board-" + id][0].$el
-      el.scrollIntoView({ behavior: "smooth" })
+      console.log(this.$refs["board-" + id][0].$el)
+      // const el = this.$refs["board-" + id][0].$el
+      // el.scrollIntoView({ behavior: "smooth" })
     },
   },
 }
