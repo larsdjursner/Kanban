@@ -10,6 +10,9 @@ import axios from "axios"
 const pinia = createPinia()
 const app = createApp(App)
 
+app.use(pinia)
+app.use(router)
+
 app.component("Presence", Presence)
 app.component("Motion", Motion)
 app.component("AbstractButton", AbstractButton)
@@ -19,7 +22,4 @@ const api = axios.create({
 })
 
 app.config.globalProperties.$http = api
-
-app.use(pinia)
-app.use(router)
 app.mount("#app")
