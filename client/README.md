@@ -1,8 +1,11 @@
 # client tech stack
 
+```
 vite
 vue3 
 tailwindcss
-daisyui
-pinia statemanagement
+pinia state management
 vue router
+axios
+motion one
+```
