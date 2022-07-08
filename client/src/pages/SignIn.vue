@@ -1,50 +1,54 @@
 <template>
   <div class="w-screen h-screen flex justify-center items-center">
-    <div class="flex flex-col gap-8 h-80 w-96">
-      <p class="text-2xl">Sign In</p>
-      <div class="flex justify-between">
-        <p>email</p>
-        <input v-model="form.email" />
-      </div>
+    <div class="flex flex-col gap-6 w-[40rem] p-4 shadow-lg rounded-lg">
+      <p class="text-2xl font-semibold">Sign In</p>
 
-      <div class="flex justify-between">
-        <p>password</p>
-        <div class="">
-          <input
-            v-model="form.password"
-            :type="showPassword ? 'text' : 'password'"
-          />
-          <input v-model="showPassword" type="checkbox" />
-        </div>
-      </div>
+      <span class="w-full border-t" />
 
-      <div class="flex justify-between">
-        <TextButton>Cancel</TextButton>
-        <TextButton>
-          <router-link to="/signup">
-            {{ "Sign up" }}
-          </router-link>
-        </TextButton>
-        <TextButton @click="submit" class="flex gap-2 items-baseline">
-          <p>Submit</p>
-          <Throbber v-if="submitting" />
-        </TextButton>
-      </div>
+      <FormInput
+        v-model="form.email"
+        text="Email"
+        placeholder="Enter email..."
+      />
+
+      <FormInput
+        v-model="form.password"
+        text="Password"
+        placeholder="Enter password..."
+        password
+      />
+
+      <TextButton
+        class="grid grid-cols-3 w-full mx-0 shadow-lg"
+        @click="submit"
+      >
+        <span />
+        <p class="text-xl">Submit</p>
+        <Throbber v-if="submitting" />
+      </TextButton>
+
+      <router-link
+        to="/signup"
+        class="hover:underline text-blue-500 hover:text-blue-400 self-center"
+      >
+        {{ "Don't have an account? Sign up instead" }}
+      </router-link>
     </div>
   </div>
 </template>
 
 <script>
 import { useAuth } from "../stores/auth"
-
+import FormInput from "../components/form/FormInput.vue"
 export default {
+  components: { FormInput },
+
   data: () => ({
     auth: useAuth(),
     form: {
       email: "",
       password: "",
     },
-    showPassword: false,
     submitting: false,
   }),
 

@@ -1,53 +1,68 @@
 <template>
   <div class="w-screen h-screen flex justify-center items-center">
-    <div class="flex flex-col">
-      <p class="text-2xl">Sign Up</p>
+    <div class="flex flex-col gap-6 w-[40rem] p-4 shadow-lg rounded-lg">
+      <p class="text-2xl font-semibold">Sign Up</p>
 
-      <div class="flex">
-        <p>name</p>
-        <input v-model="form.name" />
-      </div>
+      <span class="w-full border-t" />
 
-      <div class="flex">
-        <p>email</p>
-        <input v-model="form.email" />
-      </div>
+      <FormInput
+        v-model="form.name"
+        text="Name"
+        placeholder="Enter your name..."
+      />
 
-      <div class="flex">
-        <p>password</p>
-        <input v-model="form.password" />
-      </div>
+      <FormInput
+        v-model="form.email"
+        text="Email"
+        placeholder="Enter an email..."
+      />
 
-      <div class="flex">
-        <p>repeat password</p>
-        <input v-model="form.cpassword" />
-      </div>
+      <FormInput
+        v-model="form.password"
+        text="Password"
+        placeholder="Enter password..."
+        password
+      />
 
-      <div class="flex">
-        <TextButton>Cancel</TextButton>
-        <TextButton>
-          <router-link to="/signin">
-            {{ "Sign in" }}
-          </router-link>
-        </TextButton>
-        <TextButton @click="submit" class="flex gap-2 items-baseline">
-          <p>Submit</p>
-          <Throbber v-if="submitting" />
-        </TextButton>
-      </div>
+      <FormInput
+        v-model="form.repeatPassword"
+        text="Password"
+        placeholder="Repeat password..."
+        password
+      />
+
+      <TextButton
+        class="grid grid-cols-3 w-full mx-0 shadow-lg"
+        @click="submit"
+      >
+        <span />
+        <p class="text-xl">Submit</p>
+        <Throbber v-if="submitting" />
+      </TextButton>
+
+      <router-link
+        to="/signin"
+        class="hover:underline text-blue-500 hover:text-blue-400 self-center"
+      >
+        {{ "Already have an account? Sign in instead" }}
+      </router-link>
     </div>
   </div>
 </template>
 
 <script>
 import { useAuth } from "../stores/auth"
+import FormInput from "../components/form/FormInput.vue"
+
 export default {
+  components: { FormInput },
+
   data: () => ({
     form: {
       name: "",
       email: "",
       password: "",
-      cpassword: "",
+      repeatPassword: "",
     },
     submitting: false,
     auth: useAuth(),
@@ -55,6 +70,10 @@ export default {
 
   methods: {
     async submit() {
+      if (this.form.password !== this.form.repeatPassword) {
+        prompt("Passwords are not equal!")
+        return
+      }
       this.submitting = true
       await this.$http
         .post("/signup", this.form)

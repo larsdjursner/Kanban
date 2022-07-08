@@ -12,6 +12,7 @@ export const useAuth = defineStore("auth", {
 
   actions: {
     setAuth(data) {
+      console.log("setting auth")
       sessionStorage.setItem("token", JSON.stringify(data))
     },
 
