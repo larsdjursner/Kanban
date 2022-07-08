@@ -3,7 +3,7 @@
     <Navbar />
 
     <div class="h-full w-full overflox-x-scroll">
-      <div class="p-4 h-full w-full bg-slate-500">
+      <div class="p-4 h-full w-full">
         <p>{{ board.name }}</p>
         <p>{{ board.description }}</p>
       </div>

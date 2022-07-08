@@ -19,12 +19,12 @@
               :exit="{ opacity: 0, scale: 0.6 }"
             >
               <div
-                class="flex flex-col gap-8 rounded-xl dark:bg-white bg-slate-500 overflow-hidden"
+                class="flex flex-col gap-8 rounded-xl bg-white overflow-hidden"
               >
                 <div class="flex flex-col">
                   <!-- header -->
-                  <div class="flex border-b border-slate-400 m-2 p-2">
-                    <p class="font-semibold text-slate-300 text-xl">
+                  <div class="flex shadow-md p-4">
+                    <p class="font-semibold text-xl">
                       <slot name="header" />
                     </p>
                   </div>

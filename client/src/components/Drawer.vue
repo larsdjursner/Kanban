@@ -11,26 +11,19 @@
       :exit="{ opacity: 0, x: -50 }"
     >
       <div class="flex h-full z-0">
-        <div class="flex flex-col w-72 h-full py-6 pr-1 gap-4 bg-slate-700">
+        <div class="flex flex-col w-72 h-full py-6 pr-1 gap-4">
           <!-- title -->
-          <div class="w-full text-slate-400">
+          <div class="w-full">
             <slot name="header" />
           </div>
 
           <!-- content -->
-          <div class="w-full h-3/4 text-slate-400">
+          <div class="w-full h-3/4">
             <slot name="content" />
           </div>
 
-          <!-- add content button -->
-          <!-- <div class="w-full">
-            <slot name="button" />
-          </div> -->
-
           <div class="w-full flex justify-center">
-            <AbstractButton class="m-2" @handleClick="toggleDrawer">
-              <p class="my-1 mx-4">{{ "Hide Sidebar" }}</p>
-            </AbstractButton>
+            <TextButton @click="toggleDrawer">{{ "Hide Sidebar" }}</TextButton>
           </div>
         </div>
         <div
@@ -70,12 +63,7 @@
 </template>
 
 <script>
-import { Presence, Motion } from "@motionone/vue"
-import AbstractButton from "./buttons/AbstractButton.vue"
-
 export default {
-  components: { Presence, Motion, AbstractButton },
-
   data: () => ({
     open: true,
   }),

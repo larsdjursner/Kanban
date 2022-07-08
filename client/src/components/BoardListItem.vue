@@ -8,7 +8,7 @@
     >
       <p
         class="font-semibold w-full"
-        :class="isCurrentlySelected ? 'text-white' : 'text-slate-300'"
+        :class="isCurrentlySelected ? 'text-white' : 'text-slate-800'"
       >
         {{ board.name }}
       </p>

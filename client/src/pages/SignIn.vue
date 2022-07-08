@@ -9,12 +9,14 @@
         v-model="form.email"
         text="Email"
         placeholder="Enter email..."
+        required
       />
 
       <FormInput
         v-model="form.password"
         text="Password"
         placeholder="Enter password..."
+        required
         password
       />
 

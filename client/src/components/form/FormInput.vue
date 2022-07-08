@@ -5,8 +5,9 @@
     <div class="flex relative h-12">
       <input
         ref="input"
-        :modelValue="modelValue"
         class="rounded-md h-full w-full p-4 shadow-md"
+        :required="required"
+        :modelValue="modelValue"
         :placeholder="placeholder"
         :type="showPassword || !password ? 'text' : 'password'"
         @input="$emit('update:modelValue', $event.target.value)"
@@ -41,6 +42,11 @@ export default {
     },
 
     password: {
+      type: Boolean,
+      default: false,
+    },
+
+    required: {
       type: Boolean,
       default: false,
     },

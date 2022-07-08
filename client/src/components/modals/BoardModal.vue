@@ -4,28 +4,24 @@
       {{ "Create new board" }}
     </template>
     <template #content>
-      <div class="flex justify-between items-baseline px-4 py-8">
-        <p class="font-semibold text-md">Board name</p>
-        <input
+      <div class="flex flex-col gap-8 mx-4 my-8">
+        <FormInput
           v-model="board.name"
-          class="bg-slate-300 w-3/4 h-10 rounded-lg py-2 px-6"
+          text="Board name"
           placeholder="Enter a board name..."
           required
         />
-      </div>
 
-      <div class="flex justify-between items-baseline px-4 py-8">
-        <p class="font-semibold text-md">Board description</p>
-        <input
+        <FormInput
           v-model="board.description"
-          class="bg-slate-300 w-3/4 h-10 rounded-lg py-2 px-6"
-          placeholder="Enter a board name..."
+          text="Board description"
+          placeholder="Enter an optional description..."
         />
       </div>
     </template>
 
     <template #footer>
-      <div class="flex flex-row justify-end bg-slate-600 px-4 py-2 gap-4">
+      <div class="flex flex-row justify-end px-4 py-2 gap-4">
         <AbstractButton class="px-4 py-2" @click="cancel">
           Cancel
         </AbstractButton>
@@ -49,9 +45,10 @@
 import Modal from "./Modal.vue"
 import AbstractButton from "../buttons/AbstractButton.vue"
 import ConfirmationModal from "./ConfirmationModal.vue"
+import FormInput from "../form/FormInput.vue"
 
 export default {
-  components: { Modal, AbstractButton, ConfirmationModal },
+  components: { Modal, AbstractButton, ConfirmationModal, FormInput },
 
   props: {
     showModal: { type: Boolean, default: false },
@@ -60,7 +57,10 @@ export default {
   emits: ["closeModal", "addBoard"],
 
   data: () => ({
-    board: {},
+    board: {
+      name: "",
+      description: "",
+    },
     changed: false,
     showConfirmation: false,
   }),

@@ -7,18 +7,21 @@
 
       <FormInput
         v-model="form.name"
+        required
         text="Name"
         placeholder="Enter your name..."
       />
 
       <FormInput
         v-model="form.email"
+        required
         text="Email"
         placeholder="Enter an email..."
       />
 
       <FormInput
         v-model="form.password"
+        required
         text="Password"
         placeholder="Enter password..."
         password
@@ -26,6 +29,7 @@
 
       <FormInput
         v-model="form.repeatPassword"
+        required
         text="Password"
         placeholder="Repeat password..."
         password

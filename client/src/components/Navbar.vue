@@ -3,15 +3,7 @@
     class="w-full max h-14 border-b-2 p-2 flex items-baseline justify-between"
   >
     <p class="text-xl font-semibold">{{}}</p>
-    <!-- <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden"
-      >Open drawer</label
-    > -->
-    <input
-      type="checkbox"
-      class="toggle"
-      :checked="themeStore.darkMode"
-      @change="themeStore.toggleTheme"
-    />
+    <Toggle :checked="theme.darkMode" @click="theme.toggleTheme" />
 
     <TextButton @click="logout"> {{ "Log out" }}</TextButton>
   </div>
@@ -22,13 +14,14 @@ import { useAuth } from "../stores/auth"
 import { useStore } from "../stores/store"
 import { useThemeStore } from "../stores/theme"
 import TextButton from "./buttons/TextButton.vue"
+import Toggle from "./buttons/ThemeToggle.vue"
 
 export default {
-  components: { TextButton },
+  components: { TextButton, Toggle },
   data: () => ({
-    themeStore: useThemeStore(),
     store: useStore(),
     auth: useAuth(),
+    theme: useThemeStore(),
     currentBoard: null,
   }),
   computed: {

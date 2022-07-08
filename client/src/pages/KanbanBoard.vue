@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-screen max-h-screen w-screen h-screen flex bg-slate-700">
+  <div class="max-w-screen max-h-screen w-screen h-screen flex">
     <BoardModal
       :show-modal="showModal"
       @closeModal="showModal = false"
@@ -18,7 +18,7 @@
 
           <ul
             ref="list"
-            class="h-full overflow-y-scroll overflow-x-hidden scrollbar-dark dark:scrollbar flex flex-col py-2 pr-2 my-2 rounded-xl bg-slate-600"
+            class="h-full overflow-y-scroll overflow-x-hidden scrollbar flex flex-col py-2 pr-2 my-2 rounded-xl shadow-lg"
           >
             <BoardListItem
               v-for="board in store.getBoards"
@@ -38,22 +38,22 @@
 </template>
 
 <script>
-import Drawer from "../components/Drawer.vue"
-import BoardListItem from "../components/BoardListItem.vue"
 import { useStore } from "../stores/store"
-import Navbar from "../components/Navbar.vue"
-import Block from "../components/Block.vue"
-import BoardModal from "../components/modals/BoardModal.vue"
 import { animate, stagger } from "motion"
+
+import Drawer from "../components/Drawer.vue"
+import Navbar from "../components/Navbar.vue"
+
 import NewBoard from "../components/NewBoard.vue"
+import BoardModal from "../components/modals/BoardModal.vue"
 import BoardContent from "../components/BoardContent.vue"
+import BoardListItem from "../components/BoardListItem.vue"
 
 export default {
   components: {
     Drawer,
     BoardListItem,
     Navbar,
-    Block,
     BoardModal,
     NewBoard,
     BoardContent,
