@@ -27,7 +27,6 @@ export const useAuth = defineStore("auth", {
     },
 
     async checkForToken() {
-      console.log("called")
       let token
 
       if (sessionStorage.getItem("token")) {

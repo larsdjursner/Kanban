@@ -1,6 +1,6 @@
 <template>
   <button ref="btn" class="px-6" @click="click">
-    <p class="font-semibold text-slate-300">
+    <p class="font-semibold">
       {{ "Create new board" }}
     </p>
   </button>

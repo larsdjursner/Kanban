@@ -1,8 +1,8 @@
 <template>
   <div
-    class="w-full max h-14 border-b-2 p-2 flex items-baseline justify-between bg-slate-700"
+    class="w-full max h-14 border-b-2 p-2 flex items-baseline justify-between"
   >
-    <p class="text-xl font-semibold text-slate-300">{{}}</p>
+    <p class="text-xl font-semibold">{{}}</p>
     <!-- <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden"
       >Open drawer</label
     > -->
@@ -24,6 +24,7 @@ import { useThemeStore } from "../stores/theme"
 import TextButton from "./buttons/TextButton.vue"
 
 export default {
+  components: { TextButton },
   data: () => ({
     themeStore: useThemeStore(),
     store: useStore(),
@@ -35,7 +36,6 @@ export default {
       return this.$route.params.id
     },
   },
-  components: { TextButton },
 
   methods: {
     logout() {

@@ -42,12 +42,16 @@ router.beforeEach(async (to, from, next) => {
 
   if (!auth.isAuth) {
     const tokenExists = await auth.checkForToken()
-    tokenExists && next({ name: "boards" })
+    !tokenExists && next({ name: "landing" })
   }
 
   if (to.meta.requiresAuth && !auth.isAuth) {
     next({ name: "signin" })
   } else next()
+
+  if (auth.isAuth && (to.name === "signup" || to.name === "signin")) {
+    next({ name: "boards" })
+  }
 })
 
 export default router
