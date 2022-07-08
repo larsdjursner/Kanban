@@ -37,8 +37,13 @@ const router = createRouter({
   routes, // short for `routes: routes`
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const auth = useAuth()
+
+  if (!auth.isAuth) {
+    const tokenExists = await auth.checkForToken()
+    tokenExists && next({ name: "boards" })
+  }
 
   if (to.meta.requiresAuth && !auth.isAuth) {
     next({ name: "signin" })

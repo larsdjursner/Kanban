@@ -27,3 +27,5 @@ const api = axios.create({
 
 app.config.globalProperties.$http = api
 app.mount("#app")
+
+export default api

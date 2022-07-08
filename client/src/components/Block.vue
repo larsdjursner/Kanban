@@ -4,13 +4,12 @@
     <p class="font-bold flex justify-center text-xl border-b-2">{{ title }}</p>
     <!-- stories -->
     <div class="overflow-y-scroll">
-      <Story v-for="story in stories" :key="story.id" :story="story" />
+      <!-- <Story v-for="story in stories" :key="story.id" :story="story" /> -->
     </div>
   </div>
 </template>
 
 <script>
-import storiesData from "../mockdata/stories.json"
 import Story from "./Story.vue"
 export default {
   components: { Story },
@@ -22,8 +21,6 @@ export default {
     },
   },
 
-  data: () => ({
-    stories: storiesData,
-  }),
+  data: () => ({}),
 }
 </script>

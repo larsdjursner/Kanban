@@ -1,4 +1,5 @@
 import { defineStore } from "pinia"
+import api from "../main"
 
 export const useAuth = defineStore("auth", {
   state: () => ({
@@ -12,7 +13,6 @@ export const useAuth = defineStore("auth", {
 
   actions: {
     setAuth(data) {
-      console.log("setting auth")
       sessionStorage.setItem("token", JSON.stringify(data))
     },
 
@@ -24,6 +24,38 @@ export const useAuth = defineStore("auth", {
       this.user = null
       sessionStorage.removeItem("token")
       localStorage.removeItem("token")
+    },
+
+    async checkForToken() {
+      console.log("called")
+      let token
+
+      if (sessionStorage.getItem("token")) {
+        token = JSON.parse(sessionStorage.getItem("token"))
+      } else if (localStorage.getItem("token")) {
+        token = JSON.parse(localStorage.getItem("token"))
+      } else {
+        return false
+      }
+
+      api.defaults.headers.common[
+        "Authorization"
+      ] = `${token.token_type} ${token.access_token}`
+
+      this.setAuth(token)
+
+      await api
+        .get("/getuser")
+        .then(({ data }) => {
+          this.setUser(data)
+        })
+        .catch((err) => {
+          console.log(err)
+
+          return false
+        })
+
+      return true
     },
   },
 })
