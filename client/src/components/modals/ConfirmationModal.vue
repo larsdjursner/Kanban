@@ -15,7 +15,7 @@
   </DialogModal>
 </template>
 <script>
-import AbstractButton from "../AbstractButton.vue"
+import AbstractButton from "../buttons/AbstractButton.vue"
 import DialogModal from "./Dialog.vue"
 
 export default {

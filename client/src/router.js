@@ -18,7 +18,13 @@ const routes = [
     component: () => import("./pages/SignUp.vue"),
   },
   {
-    path: "/board/:id",
+    path: "/boards",
+    name: "boards",
+    component: () => import("./pages/DefaultBoard.vue"),
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/boards/:id",
     name: "board",
     component: () => import("./pages/KanbanBoard.vue"),
     meta: { requiresAuth: true },

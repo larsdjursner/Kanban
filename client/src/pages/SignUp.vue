@@ -24,19 +24,23 @@
       </div>
 
       <div class="flex">
-        <AbstractButton>Cancel</AbstractButton>
-        <AbstractButton>
+        <TextButton>Cancel</TextButton>
+        <TextButton>
           <router-link to="/signin">
             {{ "Sign in" }}
           </router-link>
-        </AbstractButton>
-        <AbstractButton @click="submit">Submit</AbstractButton>
+        </TextButton>
+        <TextButton @click="submit" class="flex gap-2 items-baseline">
+          <p>Submit</p>
+          <Throbber v-if="submitting" />
+        </TextButton>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { useAuth } from "../stores/auth"
 export default {
   data: () => ({
     form: {
@@ -45,11 +49,38 @@ export default {
       password: "",
       cpassword: "",
     },
+    submitting: false,
+    auth: useAuth(),
   }),
 
   methods: {
-    submit() {
-      console.log(this.form)
+    async submit() {
+      console.log("one call")
+      this.submitting = true
+      await this.$http
+        .post("/signup", this.form)
+        .then(({ data }) => this.auth.setAuth(data))
+        .catch((err) => {
+          console.log(err)
+          return
+        })
+
+      const token = JSON.parse(sessionStorage.getItem("token"))
+
+      await this.$http
+        .get("/getuser", {
+          headers: {
+            Authorization: `${token.token_type} ${token.access_token}`,
+          },
+        })
+        .then(({ data }) => {
+          this.auth.setUser(data)
+          this.$router.push("/boards")
+        })
+        .catch((err) => {
+          console.log(err)
+          return
+        })
     },
   },
 }

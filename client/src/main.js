@@ -4,7 +4,9 @@ import App from "./App.vue"
 import router from "./router"
 import "./index.css"
 import { Presence, Motion } from "@motionone/vue"
-import AbstractButton from "./components/AbstractButton.vue"
+import AbstractButton from "./components/buttons/AbstractButton.vue"
+import TextButton from "./components/buttons/TextButton.vue"
+import Throbber from "./components/buttons/Throbber.vue"
 import axios from "axios"
 
 const pinia = createPinia()
@@ -16,6 +18,8 @@ app.use(router)
 app.component("Presence", Presence)
 app.component("Motion", Motion)
 app.component("AbstractButton", AbstractButton)
+app.component("TextButton", TextButton)
+app.component("Throbber", Throbber)
 
 const api = axios.create({
   baseURL: "http://localhost:80/api", //move to env

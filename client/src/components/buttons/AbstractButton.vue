@@ -11,12 +11,9 @@
 <script>
 import { animate } from "motion"
 export default {
-  emits: ["handleClick"],
-
   methods: {
     click() {
       animate(this.$refs.btn, { scale: [1, 1.1, 1] })
-      this.$emit("handleClick")
     },
   },
 }

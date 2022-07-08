@@ -71,7 +71,7 @@
 
 <script>
 import { Presence, Motion } from "@motionone/vue"
-import AbstractButton from "./AbstractButton.vue"
+import AbstractButton from "./buttons/AbstractButton.vue"
 
 export default {
   components: { Presence, Motion, AbstractButton },

@@ -11,16 +11,18 @@ export const useAuth = defineStore("auth", {
   },
 
   actions: {
-    setAuth(user) {
-      this.user = user
-
-      // set tokens as well
+    setAuth(data) {
+      sessionStorage.setItem("token", JSON.stringify(data))
     },
 
-    resetAuth() {
-      this.user = null
+    setUser(data) {
+      this.user = data
+    },
 
-      // remove tokens
+    logout() {
+      this.user = null
+      sessionStorage.removeItem("token")
+      localStorage.removeItem("token")
     },
   },
 })

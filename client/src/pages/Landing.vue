@@ -15,6 +15,6 @@
 </template>
 
 <script>
-import AbstractButton from "../components/AbstractButton.vue"
+import AbstractButton from "../components/buttons/AbstractButton.vue"
 export default { components: { AbstractButton } }
 </script>

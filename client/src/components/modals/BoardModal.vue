@@ -47,7 +47,7 @@
 
 <script>
 import Modal from "./Modal.vue"
-import AbstractButton from "../AbstractButton.vue"
+import AbstractButton from "../buttons/AbstractButton.vue"
 import ConfirmationModal from "./ConfirmationModal.vue"
 
 export default {
