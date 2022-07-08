@@ -1,20 +1,19 @@
 <template>
   <div class="w-screen h-screen">
-    <AbstractButton>
+    <TextButton>
       <router-link to="/signup">
         {{ "Sign up" }}
       </router-link>
-    </AbstractButton>
+    </TextButton>
 
-    <AbstractButton>
+    <TextButton>
       <router-link to="/signin">
         {{ "Sign in" }}
       </router-link>
-    </AbstractButton>
+    </TextButton>
   </div>
 </template>
 
 <script>
-import AbstractButton from "../components/buttons/AbstractButton.vue"
-export default { components: { AbstractButton } }
+export default {}
 </script>

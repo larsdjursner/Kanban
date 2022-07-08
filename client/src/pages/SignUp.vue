@@ -55,7 +55,6 @@ export default {
 
   methods: {
     async submit() {
-      console.log("one call")
       this.submitting = true
       await this.$http
         .post("/signup", this.form)
@@ -66,13 +65,12 @@ export default {
         })
 
       const token = JSON.parse(sessionStorage.getItem("token"))
+      this.$http.defaults.headers.common[
+        "Authorization"
+      ] = `${token.token_type} ${token.access_token}`
 
       await this.$http
-        .get("/getuser", {
-          headers: {
-            Authorization: `${token.token_type} ${token.access_token}`,
-          },
-        })
+        .get("/getuser")
         .then(({ data }) => {
           this.auth.setUser(data)
           this.$router.push("/boards")
