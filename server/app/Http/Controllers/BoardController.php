@@ -7,24 +7,32 @@ use App\Models\Boards;
 
 class BoardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $boards = Boards::all();
+        $userId = $request->user()->id;
+        $boards = Boards::where('user_id', $userId)->get();
+
         return response()->json($boards);
     }
 
     public function store(Request $request)
     {
+        $userId = $request->user()->id;
+
         $board = new Boards;
         $board->name = $request->name;
         $board->description = $request->description;
+        $board->user_id = $userId;
+
         $board->save();
         return response()->json($board, 201);
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $board = Boards::find($id);
+        $userId = $request->user()->id;
+
+        $board = Boards::where('user_id', $userId)->find($id);
         if(!empty($board))
         {
             return response()->json($board);
@@ -39,7 +47,9 @@ class BoardController extends Controller
 
     public function update(Request $request, $id)
     {
-        if (Boards::where('id', $id)->exists()) {
+        $userId = $request->user()->id;
+
+        if (Boards::where('user_id', $userId)->where('id', $id)->exists()) {
             $board = Boards::find($id);
             $board->name = is_null($request->name) ? $board->name : $request->name;
             $board->description = is_null($request->description) ? $board->description : $request->description;
@@ -56,7 +66,9 @@ class BoardController extends Controller
 
     public function destroy($id)
     {
-        if(Boards::where('id', $id)->exists()) {
+        $userId = $request->user()->id;
+
+        if(Boards::where('user_id', $userId)->where('id', $id)->exists()) {
             $board = Boards::find($id);
             $board->delete();
 

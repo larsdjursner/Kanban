@@ -10,4 +10,13 @@ class Boards extends Model
     use HasFactory;
     protected $table = 'boards';
     protected $fillable = ['name','description'];
+
+
+    /**
+     * Get the user that owns the board.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id');
+    }
 }

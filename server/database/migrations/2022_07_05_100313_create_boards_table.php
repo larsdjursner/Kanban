@@ -17,7 +17,12 @@ return new class extends Migration
             $table->id();
             $table->string("name");
             $table->string("description");
+            $table->bigInteger('user_id');
             $table->timestamps();
+            // $table->foreign('id')
+            //     ->references('users')
+            //     ->on('users')
+            //     ->onCascade('delete');
         });
     }
 
