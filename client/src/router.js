@@ -40,17 +40,20 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const auth = useAuth()
 
-  if (!auth.isAuth) {
-    const tokenExists = await auth.checkForToken()
-    !tokenExists && next({ name: "landing" })
-  }
+  if (auth.isAuth) {
+    if (to.name === "signup" || to.name === "signin") {
+      next({ name: "boards" })
+    } else {
+      next()
+    }
+  } else {
+    if (to.meta.requiresAuth) {
+      const tokenExists = await auth.checkForToken()
 
-  if (to.meta.requiresAuth && !auth.isAuth) {
-    next({ name: "signin" })
-  } else next()
-
-  if (auth.isAuth && (to.name === "signup" || to.name === "signin")) {
-    next({ name: "boards" })
+      if (!tokenExists) {
+        next({ name: "landing" })
+      }
+    } else next()
   }
 })
 
