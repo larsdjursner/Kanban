@@ -52,7 +52,7 @@ router.beforeEach(async (to, from, next) => {
 
       if (!tokenExists) {
         next({ name: "landing" })
-      }
+      } else next()
     } else next()
   }
 })
