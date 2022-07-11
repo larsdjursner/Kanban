@@ -13,7 +13,7 @@ import { animate } from "motion"
 export default {
   methods: {
     click() {
-      animate(this.$refs.btn, { scale: [1, 1.1, 1] })
+      animate(this.$refs.btn, { scale: [1, 0.9, 1] })
     },
   },
 }
