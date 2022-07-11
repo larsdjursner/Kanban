@@ -29,6 +29,18 @@ const routes = [
     component: () => import("./pages/KanbanBoard.vue"),
     meta: { requiresAuth: true },
   },
+  {
+    path: "/user",
+    name: "profile",
+    component: () => import("./pages/Profile.vue"),
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/user/settings",
+    name: "usersettings",
+    component: () => import("./pages/Settings.vue"),
+    meta: { requiresAuth: true },
+  },
 ]
 
 const router = createRouter({
