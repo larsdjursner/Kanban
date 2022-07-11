@@ -6,12 +6,18 @@
       :class="isCurrentlySelected && 'bg-indigo-600 rounded-r-full'"
       @click="click"
     >
-      <p
-        class="font-semibold w-full"
-        :class="isCurrentlySelected ? 'text-white' : 'text-slate-800'"
-      >
-        {{ board.name }}
-      </p>
+      <div ref="content" class="w-full flex items-center gap-2">
+        <TemplateIcon
+          class="h-4 w-4"
+          :class="isCurrentlySelected ? 'text-white' : 'text-slate-500'"
+        />
+        <p
+          class="font-semibold w-full"
+          :class="isCurrentlySelected ? 'text-white' : 'text-slate-800'"
+        >
+          {{ board.name }}
+        </p>
+      </div>
     </div>
   </router-link>
 </template>
@@ -19,8 +25,11 @@
 <script>
 import { useStore } from "../stores/store"
 import { animate } from "motion"
+import { TemplateIcon } from "@heroicons/vue/outline"
 
 export default {
+  components: { TemplateIcon },
+
   props: {
     board: {
       type: Object,
@@ -39,7 +48,7 @@ export default {
   },
   methods: {
     click() {
-      animate(this.$refs.btn, { scale: [1, 1.1, 1] })
+      animate(this.$refs.btn, { opacity: [0, 1] })
     },
   },
 }
