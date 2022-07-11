@@ -22,8 +22,13 @@
             <slot name="content" />
           </div>
 
+          <ThemeToggle />
+
           <div class="w-full flex justify-center">
-            <TextButton @click="toggleDrawer">{{ "Hide Sidebar" }}</TextButton>
+            <TextButton class="flex items-center gap-4" @click="toggleDrawer">
+              <p>{{ "Hide Sidebar" }}</p>
+              <EyeOffIcon class="h-5 w-5" />
+            </TextButton>
           </div>
         </div>
         <div
@@ -63,11 +68,14 @@
 </template>
 
 <script>
+import ThemeToggle from "./buttons/ThemeToggle.vue"
+import { EyeOffIcon } from "@heroicons/vue/outline"
+
 export default {
+  components: { ThemeToggle, EyeOffIcon },
   data: () => ({
     open: true,
   }),
-
   methods: {
     toggleDrawer() {
       this.open = !this.open
