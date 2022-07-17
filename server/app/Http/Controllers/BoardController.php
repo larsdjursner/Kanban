@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Boards;
+use App\Models\Task;
 
 class BoardController extends Controller
 {
@@ -35,10 +36,17 @@ class BoardController extends Controller
         $board = Boards::where('user_id', $userId)->find($id);
         if(!empty($board))
         {
+            $tasks = Task::where('user_id', $userId)
+                ->where('board_id', $board->id)
+                ->get();
+
+            $board->tasks = $tasks;
+
             return response()->json($board);
         }
         else
         {
+           
             return response()->json([
                 "message" => "board not found"
             ], 404);
@@ -73,7 +81,7 @@ class BoardController extends Controller
             $board->delete();
 
             return response()->json([
-              "message" => "records deleted."
+              "message" => "board deleted."
             ], 202);
         } else {
             return response()->json([

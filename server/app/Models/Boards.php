@@ -19,4 +19,8 @@ class Boards extends Model
     {
         return $this->belongsTo(User::class, 'id');
     }
+
+    public function tasks() {
+        return $this->hasMany(Task::class);
+    }
 }

@@ -28,10 +28,17 @@ Route::post('/signin', [AuthController::class, 'signin']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/getuser', [AuthController::class, 'getUser']);
+
     Route::get('/boards',[BoardController::class, 'index']);
     Route::get('/boards/{id}',[BoardController::class, 'show']);
     Route::post('/boards',[BoardController::class, 'store']);
     Route::put('/boards/{id}',[BoardController::class, 'update']);
     Route::delete('/boards/{id}',[BoardController::class, 'destroy']);
+
+    Route::get('/tasks',[TaskController::class, 'index']);
+    Route::get('/tasks/{id}',[TaskController::class, 'show']);
+    Route::post('/tasks',[TaskController::class, 'store']);
+    Route::put('/tasks/{id}',[TaskController::class, 'update']);
+    Route::delete('/tasks/{id}',[TaskController::class, 'destroy']);
 });
 
