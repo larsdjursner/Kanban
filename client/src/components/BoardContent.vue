@@ -2,12 +2,23 @@
   <div class="flex flex-col flex-1 max-h-full max-w-full w-full h-full">
     <Navbar />
 
-    <div class="h-full w-full overflox-x-scroll">
-      <div v-if="currentBoard" class="p-4 h-full w-full">
+    <div class="h-full w-full overflox-x-scroll px-6 py-2 bg-slate-100">
+      <!-- <div v-if="currentBoard" class="p-4 h-full w-full">
         <p>{{ currentBoard.name }}</p>
         <p>{{ currentBoard.description }}</p>
-      </div>
+      </div> -->
       <!-- <Block /> -->
+      <ul v-if="currentBoard && currentBoard.tasks" class="flex gap-10">
+        <li
+          v-for="task in currentBoard.tasks"
+          :key="task.id"
+          class="rounded-lg px-4 py-2 border shadow-lg bg-white"
+        >
+          {{ task.name }}
+        </li>
+      </ul>
+
+      <div v-else>loading.....</div>
     </div>
   </div>
 </template>
