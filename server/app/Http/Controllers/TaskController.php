@@ -10,24 +10,25 @@ class TaskController extends Controller
     public function index(Request $request)
     {
         $userId = $request->user()->id;
-        $boardId = $request->boardId();
+        $boardId = $request->boardId;
 
         $tasks = Task::where('user_id', $userId)
             ->where('board_id', $boardId)
             ->get();
 
         return response()->json($tasks);
+
+        return null;
       
     }
 
     public function store(Request $request)
     {
         $userId = $request->user()->id;
-        $boardId = $request->boardId();
+        $boardId = $request->boardId;
 
         $task = new task;
         $task->name = $request->name;
-
 
         $task->user_id = $userId;
         $task->board_id = $boardId;
@@ -40,7 +41,7 @@ class TaskController extends Controller
     public function show(Request $request, $id)
     {
         $userId = $request->user()->id;
-        $boardId = $request->boardId();
+        $boardId = $request->boardId;
 
         $task = Task::where('user_id', $userId)
         ->where('board_id', $boardId)
@@ -61,7 +62,7 @@ class TaskController extends Controller
     public function update(Request $request, $id)
     {
         $userId = $request->user()->id;
-        $boardId = $request->boardId();
+        $boardId = $request->boardId;
 
 
         if (Task::where('user_id', $userId)
@@ -87,7 +88,7 @@ class TaskController extends Controller
     public function destroy($id)
     {
         $userId = $request->user()->id;
-        $boardId = $request->boardId();
+        $boardId = $request->boardId;
 
 
         if(Task::where('user_id', $userId)
