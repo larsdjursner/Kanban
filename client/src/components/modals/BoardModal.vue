@@ -54,7 +54,7 @@ export default {
     showModal: { type: Boolean, default: false },
   },
 
-  emits: ["closeModal", "addBoard"],
+  emits: ["closeModal", "addedBoard"],
 
   data: () => ({
     board: {
@@ -81,7 +81,10 @@ export default {
   methods: {
     closeModal() {
       // clean up
-      this.board = {}
+      this.board = {
+        name: "",
+        description: "",
+      }
       this.showConfirmation = false
       this.changed = false
 
@@ -100,10 +103,16 @@ export default {
       this.closeModal()
     },
 
-    addBoard() {
-      this.$emit("addBoard", this.board)
+    async addBoard(board) {
+      await this.$http
+        .post("/boards", board)
+        .then(({ data }) => {
+          this.store.addBoard(data)
 
-      this.closeModal()
+          this.closeModal()
+          this.$emit("addedBoard", data)
+        })
+        .catch((err) => console.log(err))
     },
   },
 }

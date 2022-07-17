@@ -3,9 +3,9 @@
     <Navbar />
 
     <div class="h-full w-full overflox-x-scroll">
-      <div class="p-4 h-full w-full">
-        <p>{{ board.name }}</p>
-        <p>{{ board.description }}</p>
+      <div v-if="currentBoard" class="p-4 h-full w-full">
+        <p>{{ currentBoard.name }}</p>
+        <p>{{ currentBoard.description }}</p>
       </div>
       <!-- <Block /> -->
     </div>
@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import { useStore } from "../stores/store"
 import Navbar from "./Navbar.vue"
 
 export default {
@@ -23,26 +24,32 @@ export default {
   },
 
   data: () => ({
-    board: {},
+    store: useStore(),
   }),
 
-  async created() {
-    await this.fetchBoard()
-
-    this.$watch(
-      () => this.id,
-      () => {
-        this.fetchBoard()
-      }
-    )
-  },
-
-  methods: {
-    async fetchBoard() {
-      await this.$http
-        .get(`/boards/${this.id}`)
-        .then(({ data }) => (this.board = data))
+  computed: {
+    currentBoard() {
+      return this.store.currentBoard
     },
   },
+
+  // async created() {
+  //   await this.fetchBoard()
+
+  //   this.$watch(
+  //     () => this.id,
+  //     () => {
+  //       this.fetchBoard()
+  //     }
+  //   )
+  // },
+
+  // methods: {
+  //   async fetchBoard() {
+  //     await this.$http
+  //       .get(`/boards/${this.id}`)
+  //       .then(({ data }) => (this.board = data))
+  //   },
+  // },
 }
 </script>

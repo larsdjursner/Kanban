@@ -18,9 +18,9 @@
 </template>
 
 <script>
-import BoardModal from "../components/modals/BoardModal.vue"
-import { useStore } from "../stores/store"
-import NewBoard from "../components/NewBoard.vue"
+import BoardModal from "../../components/modals/BoardModal.vue"
+import { useStore } from "../../stores/store"
+import NewBoard from "../../components/NewBoard.vue"
 
 export default {
   components: { BoardModal, NewBoard },

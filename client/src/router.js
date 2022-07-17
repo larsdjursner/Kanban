@@ -10,23 +10,23 @@ const routes = [
   {
     path: "/signin",
     name: "signin",
-    component: () => import("./pages/SignIn.vue"),
+    component: () => import("./pages/auth/SignIn.vue"),
   },
   {
     path: "/signup",
     name: "signup",
-    component: () => import("./pages/SignUp.vue"),
+    component: () => import("./pages/auth/SignUp.vue"),
   },
   {
     path: "/boards",
     name: "boards",
-    component: () => import("./pages/DefaultBoard.vue"),
+    component: () => import("./pages/board/DefaultBoard.vue"),
     meta: { requiresAuth: true },
   },
   {
     path: "/boards/:id",
     name: "board",
-    component: () => import("./pages/KanbanBoard.vue"),
+    component: () => import("./pages/board/KanbanBoard.vue"),
     meta: { requiresAuth: true },
   },
   {

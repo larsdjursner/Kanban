@@ -55,8 +55,8 @@
 </template>
 
 <script>
-import { useAuth } from "../stores/auth"
-import FormInput from "../components/form/FormInput.vue"
+import { useAuth } from "../../stores/auth"
+import FormInput from "../../components/form/FormInput.vue"
 
 export default {
   components: { FormInput },
