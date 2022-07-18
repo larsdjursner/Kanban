@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { useStore } from "../stores/store"
+import { useStore } from "../../stores/store"
 import { animate } from "motion"
 import { TemplateIcon } from "@heroicons/vue/outline"
 

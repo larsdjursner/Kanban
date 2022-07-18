@@ -7,9 +7,9 @@
         <AbstractButton class="py-2 px-4 m-2" @click="closeDialog"
           >Cancel</AbstractButton
         >
-        <AbstractButton class="py-2 px-4 m-2" @click="discardChanges"
-          >Discard</AbstractButton
-        >
+        <AbstractButton class="py-2 px-4 m-2" @click="confirm">{{
+          confirmation
+        }}</AbstractButton>
       </div>
     </template>
   </DialogModal>
@@ -27,21 +27,26 @@ export default {
       default: "Are you sure?",
     },
 
+    confirmation: {
+      type: String,
+      default: "Accept",
+    },
+
     showDialog: {
       type: Boolean,
       default: false,
     },
   },
 
-  emits: ["closeDialog", "discardChanges"],
+  emits: ["closeDialog", "confirm"],
 
   methods: {
     closeDialog() {
       this.$emit("closeDialog")
     },
 
-    discardChanges() {
-      this.$emit("discardChanges")
+    confirm() {
+      this.$emit("confirm")
     },
   },
 }

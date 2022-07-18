@@ -1,12 +1,17 @@
 <template>
-  <!-- <Dropdown v-if="openProfileMenu" :anchor="$refs.anchor" /> -->
+  <!-- <BoardModal
+    v-if="showModal"
+    :showModal="showModal"
+    editing
+    @closeModal="showModal = false"
+  /> -->
   <div
     class="w-full max h-14 border-b-2 py-2 px-4 flex items-center justify-between"
   >
     <div>
       <div v-if="currentBoard" class="flex items-center text-slate-600 gap-2">
         <p class="text-xl font-semibold">{{ `${currentBoard.name}` }}</p>
-        <button @click="ds">
+        <button @click="$emit('showModal')">
           <CogIcon class="h-5 w-5" />
         </button>
       </div>
@@ -55,11 +60,20 @@ import {
 import Dropdown from "./menu/Dropdown.vue"
 
 export default {
-  components: { TextButton, Toggle, UserIcon, Dropdown, CogIcon },
+  components: {
+    TextButton,
+    Toggle,
+    UserIcon,
+    Dropdown,
+    CogIcon,
+  },
+
+  emits: ["showModal"],
 
   data: () => ({
     store: useStore(),
     auth: useAuth(),
+    showModal: false,
 
     menu: [
       {

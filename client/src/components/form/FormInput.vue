@@ -7,7 +7,7 @@
         ref="input"
         class="rounded-md h-full w-full p-4 shadow-md"
         :required="required"
-        :modelValue="modelValue"
+        :value="modelValue"
         :placeholder="placeholder"
         :type="showPassword || !password ? 'text' : 'password'"
         @input="$emit('update:modelValue', $event.target.value)"

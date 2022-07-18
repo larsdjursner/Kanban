@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import ThemeToggle from "./buttons/ThemeToggle.vue"
+import ThemeToggle from "../buttons/ThemeToggle.vue"
 import { EyeOffIcon } from "@heroicons/vue/outline"
 
 export default {

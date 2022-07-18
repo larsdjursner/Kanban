@@ -1,10 +1,13 @@
 <template>
   <div class="max-w-screen max-h-screen w-screen h-screen flex">
     <BoardModal
-      :show-modal="showModal"
-      @closeModal="showModal = false"
-      @addedBoard="handleAddedBoard"
+      v-if="showModal"
+      :showModal="showModal"
+      :editing="editing"
+      @closeModal="closeModal"
+      @scrollToBoard="scrollToBoard"
     />
+
     <Drawer>
       <template #header>
         <p class="w-full h-full text-2xl font-bold px-6">Kanban</p>
@@ -30,12 +33,15 @@
             />
           </ul>
 
-          <NewBoard @addBoard="showModal = true" />
+          <NewBoard @showModal="showCreateModal" />
         </div>
       </template>
     </Drawer>
 
-    <BoardContent :id="parseInt($route.params.id)" />
+    <div class="flex flex-col flex-1 max-h-full max-w-full w-full h-full">
+      <Navbar @showModal="showEditModal" />
+      <BoardContent :id="parseInt($route.params.id)" />
+    </div>
   </div>
 </template>
 
@@ -43,13 +49,14 @@
 import { useStore } from "../../stores/store"
 import { animate, stagger } from "motion"
 
-import Drawer from "../../components/Drawer.vue"
+import Drawer from "../../components/menu/Drawer.vue"
 import Navbar from "../../components/Navbar.vue"
 
 import NewBoard from "../../components/NewBoard.vue"
-import BoardModal from "../../components/modals/BoardModal.vue"
-import BoardContent from "../../components/BoardContent.vue"
-import BoardListItem from "../../components/BoardListItem.vue"
+import BoardModal from "./BoardModal.vue"
+
+import BoardContent from "./BoardContent.vue"
+import BoardListItem from "./BoardListItem.vue"
 
 export default {
   components: {
@@ -64,6 +71,7 @@ export default {
   data: () => ({
     store: useStore(),
     showModal: false,
+    editing: false,
   }),
 
   async created() {
@@ -97,7 +105,7 @@ export default {
       })
     },
 
-    handleAddedBoard(board) {
+    scrollToBoard(board) {
       this.$router.replace({ name: "board", params: board.id })
       // this.$nextTick(() => this.scrollToBoard(board.id))
     },
@@ -117,6 +125,20 @@ export default {
     // const el = this.$refs["board-" + id][0].$el
     // el.scrollIntoView({ behavior: "smooth" })
     // },
+
+    showEditModal() {
+      this.showModal = true
+      this.editing = true
+    },
+
+    showCreateModal() {
+      this.showModal = true
+    },
+
+    closeModal() {
+      this.showModal = false
+      this.editing = false
+    },
   },
 }
 </script>

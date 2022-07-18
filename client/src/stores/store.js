@@ -12,6 +12,14 @@ export const useStore = defineStore("main", {
     getBoardAmount: (state) => state.boards.length,
 
     getCurrentBoard: (state) => state.currentBoard,
+
+    getFirstBoard: (state) => {
+      if (state.boards.length > 0) {
+        return state.boards[0]
+      }
+
+      return null
+    },
   },
 
   actions: {
@@ -25,6 +33,18 @@ export const useStore = defineStore("main", {
 
     addBoard(board) {
       this.boards = [...this.boards, board]
+    },
+
+    updateBoard(id, board) {
+      this.boards = this.boards.map((_board) => {
+        if (_board.id === id) {
+          _board = { ...board }
+        }
+      })
+    },
+
+    deleteBoardById(id) {
+      this.boards = this.boards.filter((board) => board.id !== id)
     },
   },
 })

@@ -10,13 +10,13 @@
 import { animate } from "motion"
 
 export default {
-  emits: ["addBoard"],
+  emits: ["showModal"],
 
   methods: {
     click() {
       animate(this.$refs.btn, { scale: [1, 1.1, 1] })
 
-      this.$emit("addBoard")
+      this.$emit("showModal")
     },
   },
 }
