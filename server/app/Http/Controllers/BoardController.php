@@ -36,11 +36,11 @@ class BoardController extends Controller
         $board = Boards::where('user_id', $userId)->find($id);
         if(!empty($board))
         {
-            $tasks = Task::where('user_id', $userId)
+            $stories = Story::where('user_id', $userId)
                 ->where('board_id', $board->id)
                 ->get();
 
-            $board->tasks = $tasks;
+            $board->stories = $stories;
 
             return response()->json($board);
         }

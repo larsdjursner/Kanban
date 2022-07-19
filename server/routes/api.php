@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\BoardController;
-use \App\Http\Controllers\TaskController;
+use \App\Http\Controllers\StoryController;
 use \App\Http\Controllers\AuthController;
 
 /*
@@ -36,10 +36,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/boards/{id}',[BoardController::class, 'update']);
     Route::delete('/boards/{id}',[BoardController::class, 'destroy']);
 
-    Route::get('/tasks',[TaskController::class, 'index']);
-    Route::get('/tasks/{id}',[TaskController::class, 'show']);
-    Route::post('/tasks',[TaskController::class, 'store']);
-    Route::put('/tasks/{id}',[TaskController::class, 'update']);
-    Route::delete('/tasks/{id}',[TaskController::class, 'destroy']);
+    Route::get('/stories',[StoryController::class, 'index']);
+    Route::get('/stories/{id}',[StoryController::class, 'show']);
+    Route::post('/stories',[StoryController::class, 'store']);
+    Route::put('/stories/{id}',[StoryController::class, 'update']);
+    Route::delete('/stories/{id}',[StoryController::class, 'destroy']);
 });
 
