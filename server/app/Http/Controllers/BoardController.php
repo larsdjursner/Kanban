@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Boards;
-use App\Models\Task;
+use App\Models\Story;
 
 class BoardController extends Controller
 {
