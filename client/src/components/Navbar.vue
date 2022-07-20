@@ -1,12 +1,6 @@
 <template>
-  <!-- <BoardModal
-    v-if="showModal"
-    :showModal="showModal"
-    editing
-    @closeModal="showModal = false"
-  /> -->
   <div
-    class="w-full max h-14 border-b-2 py-2 px-4 flex items-center justify-between"
+    class="w-full max h-14 border-b py-2 px-4 flex items-center justify-between"
   >
     <div>
       <div v-if="currentBoard" class="flex items-center text-slate-600 gap-2">
@@ -18,7 +12,7 @@
     </div>
     <p class="text-xl font-semibold">{{ `${auth.user.name}'s Workspace` }}</p>
     <div class="flex items-center gap-6">
-      <TextButton>Add task</TextButton>
+      <TextButton v-if="currentBoard">Add story</TextButton>
       <Dropdown>
         <template #button>
           <button
@@ -75,34 +69,7 @@ export default {
     auth: useAuth(),
     showModal: false,
 
-    menu: [
-      {
-        text: "Profile",
-        ref: "profile",
-        action: () => {
-          this.toUser
-        },
-        icon: ColorSwatchIcon,
-      },
-
-      {
-        text: "Settings",
-        ref: "settings",
-        action: () => {
-          this.toSettings
-        },
-        icon: CogIcon,
-      },
-
-      {
-        text: "Log out",
-        ref: "logout",
-        action: () => {
-          this.logout
-        },
-        icon: LogoutIcon,
-      },
-    ],
+    menu: [],
   }),
 
   computed: {
@@ -111,8 +78,40 @@ export default {
     },
 
     currentBoard() {
-      return this.store.currentBoard
+      return this.store.getCurrentBoard
     },
+  },
+
+  created() {
+    this.menu = [
+      {
+        text: "Profile",
+        ref: "profile",
+        action: () => {
+          this.$router.push("/user")
+        },
+        icon: ColorSwatchIcon,
+      },
+
+      {
+        text: "Settings",
+        ref: "settings",
+        action: () => {
+          this.$router.push("/user/settings")
+        },
+        icon: CogIcon,
+      },
+
+      {
+        text: "Log out",
+        ref: "logout",
+        action: () => {
+          this.auth.logout()
+          this.$router.push("/")
+        },
+        icon: LogoutIcon,
+      },
+    ]
   },
 
   methods: {
@@ -120,19 +119,6 @@ export default {
       animate(this.$refs[item.ref], { scale: [1, 1.1, 1] })
 
       item.action()
-    },
-
-    toUser() {
-      this.$router.replace("/user")
-    },
-
-    toSettings() {
-      this.$router.replace("/user/settings")
-    },
-
-    logout() {
-      this.auth.logout()
-      this.$router.replace("/")
     },
   },
 }

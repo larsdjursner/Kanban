@@ -1,8 +1,8 @@
 <template>
   <div class="h-full w-full overflox-x-scroll px-6 py-2 bg-slate-100">
-    <ul v-if="currentBoard && currentBoard.tasks" class="flex gap-10">
+    <ul v-if="currentBoard && currentBoard.stories" class="flex gap-10">
       <li
-        v-for="task in currentBoard.tasks"
+        v-for="task in currentBoard.stories"
         :key="task.id"
         class="rounded-lg px-4 py-2 border shadow-lg bg-white"
       >

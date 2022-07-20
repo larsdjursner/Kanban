@@ -35,11 +35,9 @@ export const useStore = defineStore("main", {
       this.boards = [...this.boards, board]
     },
 
-    updateBoard(id, board) {
-      this.boards = this.boards.map((_board) => {
-        if (_board.id === id) {
-          _board = { ...board }
-        }
+    updateBoard(board) {
+      this.boards = this.boards.map((b) => {
+        return b.id === board.id ? { ...board } : b
       })
     },
 

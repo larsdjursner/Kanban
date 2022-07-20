@@ -5,7 +5,7 @@
       :showModal="showModal"
       :editing="editing"
       @closeModal="closeModal"
-      @scrollToBoard="scrollToBoard"
+      @navigateToBoard="(board) => navigateToBoard(board)"
     />
 
     <Drawer>
@@ -22,8 +22,9 @@
           </div>
 
           <ul
+            v-if="store.getBoards"
             ref="list"
-            class="h-full overflow-y-scroll overflow-x-hidden scrollbar flex flex-col py-2 pr-4 my-2 rounded-md shadow-lg"
+            class="h-full overflow-y-scroll overflow-x-hidden scrollbar flex flex-col my-2 rounded-md shadow-lg"
           >
             <BoardListItem
               v-for="board in store.getBoards"
@@ -68,6 +69,10 @@ export default {
     BoardContent,
   },
 
+  async beforeRouteUpdate(to) {
+    await this.fetchBoard(to.params.id)
+  },
+
   data: () => ({
     store: useStore(),
     showModal: false,
@@ -82,13 +87,6 @@ export default {
   mounted() {
     this.appendAnimations()
     // this.scrollToBoard(this.$route.params.id)
-
-    this.$watch(
-      () => this.$route.params,
-      ({ id }) => {
-        this.fetchBoard(id)
-      }
-    )
   },
 
   methods: {
@@ -105,8 +103,8 @@ export default {
       })
     },
 
-    scrollToBoard(board) {
-      this.$router.replace({ name: "board", params: board.id })
+    navigateToBoard(id) {
+      this.$router.replace({ name: "board", params: { id } })
       // this.$nextTick(() => this.scrollToBoard(board.id))
     },
 

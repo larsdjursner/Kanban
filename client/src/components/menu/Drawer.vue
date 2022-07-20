@@ -11,7 +11,7 @@
       :exit="{ opacity: 0, x: -50 }"
     >
       <div class="flex h-full z-0">
-        <div class="flex flex-col w-72 h-full py-6 pr-1 gap-4">
+        <div class="flex flex-col w-72 h-full py-2 pr-1 gap-4">
           <!-- title -->
           <div class="w-full">
             <slot name="header" />

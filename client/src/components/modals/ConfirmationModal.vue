@@ -3,7 +3,7 @@
     <template #header> {{ message }}</template>
 
     <template #footer>
-      <div class="flex-row justify-end">
+      <div class="flex-row w-full justify-end">
         <AbstractButton class="py-2 px-4 m-2" @click="closeDialog"
           >Cancel</AbstractButton
         >

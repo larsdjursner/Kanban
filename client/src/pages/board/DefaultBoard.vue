@@ -1,37 +1,40 @@
 <template>
   <BoardModal
-    :show-modal="showModal"
+    v-if="showModal"
+    :showModal="showModal"
     @closeModal="showModal = false"
-    @addBoard="(board) => addBoard(board)"
+    @navigateToBoard="navigateToBoardById($event)"
   />
-  <div class="flex">
-    <ul class="flex flex-col">
-      <li v-for="board in store.getBoards" :key="'board-' + board.id">
-        <router-link :to="`/boards/${board.id}`">
-          {{ board.name }}
-        </router-link>
-      </li>
-    </ul>
 
-    <NewBoard @addBoard="showModal = true" />
+  <Navbar />
+  <div class="flex flex-col justify-center items-center w-screen h-screen">
+    <p>{{ "Create a Kanban board to organize your work!" }}</p>
+
+    <NewBoard @showModal="showModal = true" />
   </div>
 </template>
 
 <script>
-import BoardModal from "../../components/modals/BoardModal.vue"
-import { useStore } from "../../stores/store"
+import BoardModal from "../board/BoardModal.vue"
 import NewBoard from "../../components/NewBoard.vue"
+import Navbar from "../../components/Navbar.vue"
+import { useStore } from "../../stores/store"
 
 export default {
-  components: { BoardModal, NewBoard },
+  components: { BoardModal, NewBoard, Navbar },
 
   data: () => ({
     showModal: false,
     store: useStore(),
   }),
 
-  created() {
-    this.fetchBoards()
+  async created() {
+    await this.fetchBoards()
+
+    if (this.store.getBoardAmount > 0) {
+      const { id } = this.store.getFirstBoard
+      this.$router.push({ name: "board", params: { id } })
+    }
   },
 
   methods: {
@@ -40,15 +43,9 @@ export default {
         this.store.setBoards(data)
       })
     },
-    async addBoard(board) {
-      await this.$http
-        .post("/boards", board)
-        .then(({ data }) => {
-          this.store.addBoard(data)
-          const { id } = data
-          this.$router.replace({ name: "board", params: { id } })
-        })
-        .catch((err) => console.log(err))
+
+    navigateToBoardById(id) {
+      this.$router.push({ name: "board", params: id })
     },
   },
 }

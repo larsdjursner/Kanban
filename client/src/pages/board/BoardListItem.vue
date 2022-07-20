@@ -1,12 +1,16 @@
 <template>
   <router-link :to="{ name: 'board', params: { id: board.id } }">
-    <div
-      ref="btn"
-      class="px-6 py-4 w-full"
-      :class="isCurrentlySelected && 'bg-indigo-600 rounded-r-full'"
-      @click="click"
-    >
-      <div ref="content" class="w-full flex items-center gap-2">
+    <div class="relative w-full h-full my-2 pr-6" @click="click">
+      <div
+        ref="btn"
+        class="px-6 py-4 h-full w-full"
+        :class="isCurrentlySelected && 'bg-indigo-600 rounded-r-full'"
+      />
+
+      <div
+        ref="content"
+        class="absolute inset-0 left-4 w-full flex items-center gap-2"
+      >
         <TemplateIcon
           class="h-4 w-4"
           :class="isCurrentlySelected ? 'text-white' : 'text-slate-500'"
@@ -46,9 +50,18 @@ export default {
       return parseInt(this.$route.params.id) === this.board.id
     },
   },
+
+  mounted() {
+    this.isCurrentlySelected && this.click()
+  },
+
   methods: {
     click() {
-      animate(this.$refs.btn, { opacity: [0, 1] })
+      animate(
+        this.$refs.btn,
+        { x: [-200, 0], easing: "ease-in" },
+        { duration: 0.5 }
+      )
     },
   },
 }

@@ -6,6 +6,7 @@
     <template #content>
       <div class="flex flex-col gap-8 mx-4 my-8">
         <FormInput
+          ref="name"
           v-model="board.name"
           text="Board name"
           placeholder="Enter a board name..."
@@ -24,18 +25,19 @@
       <div class="flex flex-row justify-between px-4 pb-4 gap-4">
         <AbstractButton
           v-if="editing"
-          class="px-4 py-2"
+          class="px-4 py-2 bg-red-400"
           @click="showDelete = true"
         >
           Delete
         </AbstractButton>
 
         <span class="flex-1" />
+
         <AbstractButton class="px-4 py-2" @click="cancel">
           Cancel
         </AbstractButton>
 
-        <AbstractButton class="px-4 py-2" @click="submit">
+        <AbstractButton class="px-4 py-2" @click="submit(board)">
           {{ editing ? "Update" : "Create" }}
         </AbstractButton>
       </div>
@@ -75,7 +77,7 @@ export default {
     showModal: { type: Boolean, default: false },
   },
 
-  emits: ["closeModal", "scrollToBoard"],
+  emits: ["closeModal", "navigateToBoard"],
 
   data: () => ({
     store: useStore(),
@@ -132,34 +134,45 @@ export default {
       this.closeModal()
     },
 
-    submit() {
-      if (this.editing) {
-        this.updateBoard()
+    async submit(board) {
+      // Validate (super low budget atm)
+      if (board.name.length === 0) {
+        prompt("needs name")
         return
       }
 
-      this.addBoard()
+      // Update or create board
+      this.editing ? await this.updateBoard(board) : await this.addBoard(board)
     },
 
-    async addBoard() {
+    async addBoard(board) {
       await this.$http
-        .post("/boards", this.board)
+        .post("/boards", board)
         .then(({ data }) => {
           this.store.addBoard(data)
-
           this.closeModal()
-          this.$emit("scrollToBoard", data)
+          this.$emit("navigateToBoard", data.id)
         })
         .catch((err) => console.log(err))
     },
 
-    async updateBoard() {
-      const { id } = this.board
+    async updateBoard(board) {
+      const { id } = board
 
-      await this.$http.put(`/boards/${id}`, this.board).then(({ data }) => {
-        this.store.updateBoard(id, data)
-        this.closeModal()
-      })
+      await this.$http
+        .put(`/boards/${id}`, board)
+        .then(({ data }) => {
+          this.store.updateBoard(data)
+        })
+        .catch((err) => console.log(err))
+
+      await this.$http
+        .get(`/boards/${id}`)
+        .then(({ data }) => {
+          this.store.setCurrentBoard = data
+          this.closeModal()
+        })
+        .catch((err) => console.log(err))
     },
 
     async deleteBoard() {
@@ -171,7 +184,7 @@ export default {
         const boardToNavigateTo = this.store.getFirstBoard
 
         if (boardToNavigateTo) {
-          this.$router.replace({
+          this.$router.push({
             name: "board",
             params: { id: boardToNavigateTo.id },
           })
