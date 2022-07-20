@@ -22,7 +22,7 @@ class BoardController extends Controller
 
         $board = new Boards;
         $board->name = $request->name;
-        $board->description = $request->description;
+        $board->description = is_null($request->description) ? '': $request->description;
         $board->user_id = $userId;
 
         $board->save();
@@ -46,7 +46,6 @@ class BoardController extends Controller
         }
         else
         {
-           
             return response()->json([
                 "message" => "board not found"
             ], 404);
@@ -62,9 +61,8 @@ class BoardController extends Controller
             $board->name = is_null($request->name) ? $board->name : $request->name;
             $board->description = is_null($request->description) ? $board->description : $request->description;
             $board->save();
-            return response()->json([
-                "message" => "Board Updated."
-            ], 404);
+
+            return response()->json($board);
         }else{
             return response()->json([
                 "message" => "Board Not Found."
