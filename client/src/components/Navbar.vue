@@ -1,30 +1,125 @@
 <template>
   <div
-    class="w-full max h-14 border-b-2 p-2 flex items-baseline justify-between bg-slate-700"
+    class="w-full max h-14 border-b py-2 px-4 flex items-center justify-between"
   >
-    <p class="text-xl font-semibold text-slate-300">
-      {{ store.currentBoard.name }}
-    </p>
-    <!-- <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden"
-      >Open drawer</label
-    > -->
-    <input
-      type="checkbox"
-      class="toggle"
-      :checked="themeStore.darkMode"
-      @change="themeStore.toggleTheme"
-    />
+    <div>
+      <div v-if="currentBoard" class="flex items-center text-slate-600 gap-2">
+        <p class="text-xl font-semibold">{{ `${currentBoard.name}` }}</p>
+        <button @click="$emit('showModal')">
+          <CogIcon class="h-5 w-5" />
+        </button>
+      </div>
+    </div>
+    <p class="text-xl font-semibold">{{ `${auth.user.name}'s Workspace` }}</p>
+    <div class="flex items-center gap-6">
+      <TextButton v-if="currentBoard">Add story</TextButton>
+      <Dropdown>
+        <template #button>
+          <button
+            class="bg-slate-200 focus:bg-slate-300 p-2 rounded-full flex justify-center items-center"
+          >
+            <UserIcon class="w-4 h-4" />
+          </button>
+        </template>
+
+        <template #menu>
+          <button
+            v-for="item in menu"
+            :key="item.name"
+            :ref="item.ref"
+            class="w-40 flex justify-between items-center py-2 px-4 hover:bg-slate-100"
+            @click="handleClick(item)"
+          >
+            <p>{{ item.text }}</p>
+            <component :is="item.icon" class="w-4 h-4" />
+          </button>
+        </template>
+      </Dropdown>
+    </div>
   </div>
 </template>
 
 <script>
+import { animate } from "motion"
 import { useStore } from "../stores/store"
-import { useThemeStore } from "../stores/theme"
+import { useAuth } from "../stores/auth"
+import TextButton from "./buttons/TextButton.vue"
+import Toggle from "./buttons/ThemeToggle.vue"
+import {
+  LogoutIcon,
+  UserIcon,
+  CogIcon,
+  ColorSwatchIcon,
+} from "@heroicons/vue/outline"
+import Dropdown from "./menu/Dropdown.vue"
 
 export default {
+  components: {
+    TextButton,
+    Toggle,
+    UserIcon,
+    Dropdown,
+    CogIcon,
+  },
+
+  emits: ["showModal"],
+
   data: () => ({
-    themeStore: useThemeStore(),
     store: useStore(),
+    auth: useAuth(),
+    showModal: false,
+
+    menu: [],
   }),
+
+  computed: {
+    id() {
+      return this.$route.params.id
+    },
+
+    currentBoard() {
+      return this.store.getCurrentBoard
+    },
+  },
+
+  created() {
+    this.menu = [
+      {
+        text: "Profile",
+        ref: "profile",
+        action: () => {
+          this.$router.push("/user")
+        },
+        icon: ColorSwatchIcon,
+      },
+
+      {
+        text: "Settings",
+        ref: "settings",
+        action: () => {
+          this.$router.push("/user/settings")
+        },
+        icon: CogIcon,
+      },
+
+      {
+        text: "Log out",
+        ref: "logout",
+        action: () => {
+          this.auth.logout()
+          this.$router.push("/")
+        },
+        icon: LogoutIcon,
+      },
+    ]
+  },
+
+  methods: {
+    handleClick(item) {
+      animate(this.$refs[item.ref], { scale: [1, 1.1, 1] })
+
+      item.action()
+    },
+  },
 }
 </script>
