@@ -19,9 +19,10 @@
               :exit="{ opacity: 0, scale: 0.6 }"
             >
               <div
+                ref="modal"
                 class="flex flex-col gap-8 rounded-xl overflow-hidden bg-white"
               >
-                <div class="flex flex-col">
+                <div class="flex flex-col" @keydown.esc="closeModal">
                   <!-- header -->
                   <div class="flex shadow-md p-4">
                     <p class="font-semibold text-xl">
@@ -67,6 +68,14 @@ export default {
   },
 
   emits: ["closeModal"],
+
+  mounted() {
+    // this.$nextTick(() => {
+    //   const modal = this.$refs.modal
+    //   console.log(modal)
+    //   modal.focus()
+    // })
+  },
 
   methods: {
     closeModal() {

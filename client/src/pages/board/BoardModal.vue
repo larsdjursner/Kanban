@@ -45,7 +45,6 @@
   </Modal>
 
   <ConfirmationModal
-    v-if="showConfirmation"
     message="Do you want to discard your changes?"
     confirmation="Discard"
     :show-dialog="showConfirmation"
@@ -54,12 +53,11 @@
   />
 
   <ConfirmationModal
-    v-if="showDelete"
     message="Are you sure you want to delete this board?"
     confirmation="Delete"
     :show-dialog="showDelete"
-    @closeDialog="showConfirmation = false"
-    @confirm="deleteBoard"
+    @closeDialog="showDelete = false"
+    @confirm="deleteBoard(board)"
   />
 </template>
 
@@ -88,7 +86,6 @@ export default {
     },
 
     changed: false,
-
     showConfirmation: false,
     showDelete: false,
   }),
@@ -117,6 +114,7 @@ export default {
         description: "",
       }
       this.showConfirmation = false
+      this.showDelete = false
       this.changed = false
 
       this.$emit("closeModal")
@@ -175,9 +173,10 @@ export default {
         .catch((err) => console.log(err))
     },
 
-    async deleteBoard() {
-      const { id } = this.board
-      await this.$http.delete(`/boards/${id}`).then(() => {
+    deleteBoard(board) {
+      console.log(this.board)
+      const { id } = board
+      this.$http.delete(`/boards/${id}`).then(() => {
         this.store.deleteBoardById(id)
         this.closeModal()
 

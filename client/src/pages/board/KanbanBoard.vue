@@ -1,7 +1,6 @@
 <template>
   <div class="max-w-screen max-h-screen w-screen h-screen flex">
     <BoardModal
-      v-if="showModal"
       :showModal="showModal"
       :editing="editing"
       @closeModal="closeModal"
