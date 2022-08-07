@@ -60,6 +60,10 @@ class StoryController extends Controller
 
         if(!empty($story))
         {
+            $tasks = Task::where('user_id', $userId)
+                ->where('story_id', $story->id)
+                ->get();
+                
             return response()->json($story);
         }
         else

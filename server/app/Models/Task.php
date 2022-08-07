@@ -9,14 +9,22 @@ class Task extends Model
 {
     use HasFactory;
     protected $table = 'tasks';
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'completed'];
 
     /**
-     * Get the board that owns the .
+     * Get the story that owns the task.
      */
-    public function board()
+    public function story()
     {
-        return $this->belongsTo(Boards::class, 'id');
+        return $this->belongsTo(Story::class, 'id');
+    }
+
+    /**
+     * If a subtask, get the parent task.
+     */
+    public function task()
+    {
+        return $this->belongsTo(Task::class, 'id');
     }
 
     /**
