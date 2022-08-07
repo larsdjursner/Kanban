@@ -1,4 +1,19 @@
 <template>
+  <ConfirmationModal
+    message="Do you want to discard your changes?"
+    confirmation="Discard"
+    :show-dialog="showConfirmation"
+    @closeDialog="showConfirmation = false"
+    @confirm="reset"
+  />
+
+  <ConfirmationModal
+    message="Are you sure you want to delete this board?"
+    confirmation="Delete"
+    :show-dialog="showDelete"
+    @closeDialog="showDelete = false"
+    @confirm="deleteBoard(board)"
+  />
   <Modal :showModal="showModal" @closeModal="cancel">
     <template #header>
       {{ editing ? "Edit board" : "Create new board" }}
@@ -11,6 +26,7 @@
           text="Board name"
           placeholder="Enter a board name..."
           required
+          focus
         />
 
         <FormInput
@@ -43,22 +59,6 @@
       </div>
     </template>
   </Modal>
-
-  <ConfirmationModal
-    message="Do you want to discard your changes?"
-    confirmation="Discard"
-    :show-dialog="showConfirmation"
-    @closeDialog="showConfirmation = false"
-    @confirm="reset"
-  />
-
-  <ConfirmationModal
-    message="Are you sure you want to delete this board?"
-    confirmation="Delete"
-    :show-dialog="showDelete"
-    @closeDialog="showDelete = false"
-    @confirm="deleteBoard(board)"
-  />
 </template>
 
 <script>
@@ -90,7 +90,7 @@ export default {
     showDelete: false,
   }),
 
-  async created() {
+  created() {
     if (this.editing) {
       this.board = { ...this.store.currentBoard }
     }

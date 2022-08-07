@@ -17,7 +17,11 @@
         />
         <p
           class="font-semibold w-full"
-          :class="isCurrentlySelected ? 'text-white' : 'text-slate-800'"
+          :class="
+            isCurrentlySelected
+              ? 'text-white'
+              : 'text-slate-800 hover:text-indigo-600'
+          "
         >
           {{ board.name }}
         </p>
@@ -59,8 +63,8 @@ export default {
     click() {
       animate(
         this.$refs.btn,
-        { x: [-200, 0], easing: "ease-in" },
-        { duration: 0.5 }
+        { x: [-120, 0], easing: "ease" },
+        { duration: 0.6, delay: 0.1 }
       )
     },
   },

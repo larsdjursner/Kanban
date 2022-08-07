@@ -12,7 +12,6 @@
     </div>
     <p class="text-xl font-semibold">{{ `${auth.user.name}'s Workspace` }}</p>
     <div class="flex items-center gap-6">
-      <TextButton v-if="currentBoard">Add story</TextButton>
       <Dropdown>
         <template #button>
           <button

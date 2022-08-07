@@ -50,6 +50,11 @@ export default {
       type: Boolean,
       default: false,
     },
+
+    focus: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   emits: ["update:modelValue"],
@@ -57,6 +62,12 @@ export default {
   data: () => ({
     showPassword: false,
   }),
+
+  mounted() {
+    if (focus) {
+      this.$refs.input.focus()
+    }
+  },
 
   methods: {
     show() {
