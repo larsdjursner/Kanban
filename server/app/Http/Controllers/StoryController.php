@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Story;
 use App\Models\Boards;
+use App\Models\Task;
 
 
 class StoryController extends Controller
@@ -63,6 +64,8 @@ class StoryController extends Controller
             $tasks = Task::where('user_id', $userId)
                 ->where('story_id', $story->id)
                 ->get();
+
+            $story->tasks = $tasks;
                 
             return response()->json($story);
         }
