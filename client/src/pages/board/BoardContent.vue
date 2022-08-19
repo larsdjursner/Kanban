@@ -1,12 +1,10 @@
 <template>
-  <div class="h-full w-full px-6 py-2 bg-slate-200 flex gap-4">
-    <div ref="stories" class="flex gap-4 w-3/4 max-w-3/4 overflow-x-scroll">
-      <StoryColumn v-for="story in stories" :key="story.id" :story="story" />
-    </div>
+  <div
+    class="h-full w-full overflow-x-auto scrollbar bg-teal-50 flex shadow-inner rounded-md"
+  >
+    <StoryColumn v-for="story in stories" :key="story.id" :story="story" />
     <AddStory @addStory="addStory($event)" />
   </div>
-
-  <!-- </div> -->
 </template>
 
 <script>
@@ -40,18 +38,15 @@ export default {
   },
 
   created() {
-    // computed props not calculated yet
-    const boardId = this.$route.params.id
-
-    this.fetchStories(boardId)
+    this.fetchStories(this.id)
   },
 
   mounted() {
     // Append animations for stories
-    if (this.stories.length > 0) {
-      const lists = Object.values(this.$refs.stories)
-      lists.map((list) => this.staggerAnimation(list))
-    }
+    // if (this.stories.length > 0) {
+    //   const lists = Object.values(this.$refs.stories)
+    //   lists.map((list) => this.staggerAnimation(list))
+    // }
   },
 
   methods: {
@@ -60,15 +55,14 @@ export default {
         .post("/stories", story, {
           params: { boardId: this.currentBoard.id },
         })
-        .then((res) => {
-          this.stories = [...this.stories, res.data]
+        .then(({ data }) => {
+          this.stories = [...this.stories, data]
         })
     },
 
     fetchStories(boardId) {
-      this.$http.get("/stories", { params: { boardId } }).then((res) => {
-        this.stories = res.data
-        console.log(this.stories)
+      this.$http.get("/stories", { params: { boardId } }).then(({ data }) => {
+        this.stories = data
       })
     },
 

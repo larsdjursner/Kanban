@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full max h-14 border-b py-2 px-4 flex items-center justify-between"
+    class="w-screen max-w-screen h-14 min-h-14 max-h-14 border-b py-2 px-4 flex items-center justify-between"
   >
     <div>
       <div v-if="currentBoard" class="flex items-center text-slate-600 gap-2">

@@ -1,47 +1,44 @@
 <template>
-  <div class="max-w-screen max-h-screen w-screen h-screen flex">
-    <BoardModal
-      :showModal="showModal"
-      :editing="editing"
-      @closeModal="closeModal"
-      @navigateToBoard="(board) => navigateToBoard(board)"
-    />
+  <BoardModal
+    :showModal="showModal"
+    :editing="editing"
+    @closeModal="closeModal"
+    @navigateToBoard="(board) => navigateToBoard(board)"
+  />
 
-    <Drawer>
+  <div class="h-screen w-screen max-h-screen max-w-screen flex flex-col">
+    <Navbar @showModal="showEditModal" />
+
+    <SidebarDrawer>
       <template #header>
-        <p class="w-full h-full text-2xl font-bold px-6">Kanban</p>
-      </template>
-
-      <template #content>
-        <div class="flex flex-col h-full">
-          <div class="w-full flex justify-center border-y py-2">
-            <p class="text-sm">
-              {{ `All boards ( ${store.getBoardAmount} )` }}
-            </p>
-          </div>
-
-          <ul
-            v-if="store.getBoards"
-            ref="list"
-            class="h-full overflow-y-scroll overflow-x-hidden scrollbar flex flex-col my-2 rounded-md shadow-lg"
-          >
-            <BoardListItem
-              v-for="board in store.getBoards"
-              :key="`board-${board.id}`"
-              :ref="`board-${board.id}`"
-              :board="board"
-            />
-          </ul>
-
-          <NewBoard @showModal="showCreateModal" />
+        <div class="w-full flex justify-center border-y py-2">
+          <p class="text-sm">
+            {{ `All boards ( ${store.getBoardAmount} )` }}
+          </p>
         </div>
       </template>
-    </Drawer>
+      <template #content>
+        <ul
+          v-if="store.getBoards"
+          ref="list"
+          class="h-full overflow-y-auto scrollbar flex flex-col rounded-md shadow-lg"
+        >
+          <BoardListItem
+            v-for="board in store.getBoards"
+            :key="`board-${board.id}`"
+            :ref="`board-${board.id}`"
+            :board="board"
+          />
+        </ul>
+      </template>
+      <template #buttons>
+        <NewBoard @showModal="showCreateModal" />
+      </template>
 
-    <div class="flex flex-col flex-1 max-h-full max-w-full w-full h-full">
-      <Navbar @showModal="showEditModal" />
-      <BoardContent :id="parseInt($route.params.id)" />
-    </div>
+      <template #body>
+        <BoardContent :id="parseInt($route.params.id)" />
+      </template>
+    </SidebarDrawer>
   </div>
 </template>
 
@@ -49,7 +46,7 @@
 import { useStore } from "../../stores/store"
 import { animate, stagger } from "motion"
 
-import Drawer from "../../components/menu/Drawer.vue"
+import SidebarDrawer from "../../components/menu/SidebarDrawer.vue"
 import Navbar from "../../components/Navbar.vue"
 
 import NewBoard from "../../components/NewBoard.vue"
@@ -57,20 +54,22 @@ import BoardModal from "./BoardModal.vue"
 
 import BoardContent from "./BoardContent.vue"
 import BoardListItem from "./BoardListItem.vue"
+import AddStory from "./partials/AddStory.vue"
 
 export default {
   components: {
-    Drawer,
     BoardListItem,
     Navbar,
     BoardModal,
     NewBoard,
     BoardContent,
+    AddStory,
+    SidebarDrawer,
   },
 
-  async beforeRouteUpdate(to) {
-    await this.fetchBoard(to.params.id)
-  },
+  // async beforeRouteUpdate(to) {
+  //   await this.fetchBoard(to.params.id)
+  // },
 
   data: () => ({
     store: useStore(),
@@ -84,7 +83,7 @@ export default {
   },
 
   mounted() {
-    this.appendAnimations()
+    // this.appendAnimations()
     // this.scrollToBoard(this.$route.params.id)
   },
 
@@ -92,7 +91,7 @@ export default {
     async fetchBoards() {
       await this.$http.get("/boards").then(({ data }) => {
         this.store.setBoards(data)
-        this.appendAnimations()
+        // this.appendAnimations()
       })
     },
 
