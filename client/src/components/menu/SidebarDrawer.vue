@@ -31,16 +31,17 @@
     <!-- body -->
     <div
       ref="body"
-      class="h-full p-2 pb-8 relative"
-      :class="open ? 'w-3/4' : 'pl-10 w-full'"
+      class="h-full pr-2 py-8 pl-10 relative"
+      :class="open ? 'w-3/4 pt-2' : 'w-full'"
     >
-      <button
-        v-if="!open"
-        class="h-6 w-6 absolute top-2 left-2"
-        @click="openDrawer"
-      >
-        <EyeIcon class="h-full w-full hover:text-slate-500" />
-      </button>
+      <div class="absolute top-2 left-2 flex flex-col gap-2">
+        <button v-if="!open" class="h-6 w-6" @click="openDrawer">
+          <EyeIcon class="h-full w-full hover:text-slate-500" />
+        </button>
+
+        <slot name="bodyOptions" />
+      </div>
+
       <slot name="body" />
     </div>
   </div>
@@ -63,10 +64,8 @@ export default {
     openDrawer() {
       const { drawer, body } = this.$refs
 
-      const { left } = body.getBoundingClientRect()
-      const { right } = drawer.getBoundingClientRect()
-
-      console.log(right, left)
+      // const { left } = body.getBoundingClientRect()
+      // const { right } = drawer.getBoundingClientRect()
 
       animate(drawer, { x: [-300, 0] }, { duration: 0.5, delay: 0.2 })
       animate(body, { x: [-300, 0] }, { duration: 0.5, delay: 0.2 })
@@ -83,8 +82,6 @@ export default {
       animate(body, { x: [left, 0] }, { duration: 0.5, delay: 0.2 })
 
       this.open = false
-
-      // console.log(drawer, body)
     },
   },
 }
