@@ -4,12 +4,12 @@
     <Presence>
       <Motion
         v-show="open"
-        :initial="{ opacity: 0 }"
+        :initial="{ opacity: 0.5 }"
         :animate="{ opacity: 1 }"
         :exit="{ opacity: 0 }"
       >
         <div
-          class="absolute bg-white top-9 right-4 rounded-md border"
+          class="absolute bg-white top-9 right-4 rounded-md border z-50"
           @click.stop
         >
           <ul ref="list" class="flex flex-col w-full">
@@ -26,15 +26,5 @@ export default {
   data: () => ({
     open: false,
   }),
-
-  // methods: {
-  //   handleOpen() {
-  //     const list = this.$refs["list"]
-
-  //     animate(list, { opacity: [0, 1] })
-
-  //     this.open = !this.open
-  //   },
-  // },
 }
 </script>
