@@ -12,8 +12,11 @@
         class="absolute inset-0 left-4 w-3/4 flex items-center gap-2"
       >
         <TemplateIcon
-          class="h-4 w-4"
-          :class="isCurrentlySelected ? 'text-white' : 'text-slate-500'"
+          :class="
+            isCurrentlySelected
+              ? 'text-white h-5 w-5'
+              : 'text-slate-500 h-4 w-4'
+          "
         />
         <p
           class="font-semibold w-full"
@@ -66,6 +69,10 @@ export default {
         { x: [-120, 0], easing: "ease" },
         { duration: 0.6, delay: 0.1 }
       )
+    },
+
+    edit() {
+      console.log("edit", this.board.id)
     },
   },
 }

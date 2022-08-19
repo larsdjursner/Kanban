@@ -1,6 +1,6 @@
 <template>
   <TextButton @click="click">
-    <p class="font-semibold">
+    <p class="">
       {{ "Create new board" }}
     </p>
   </TextButton>

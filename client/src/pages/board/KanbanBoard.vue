@@ -7,7 +7,7 @@
   />
 
   <div class="h-screen w-screen max-h-screen max-w-screen flex flex-col">
-    <Navbar @showModal="showEditModal" />
+    <Navbar />
 
     <SidebarDrawer>
       <template #header>
@@ -35,6 +35,15 @@
         <NewBoard @showModal="showCreateModal" />
       </template>
 
+      <template #bodyOptions>
+        <button class="h-6 w-6" @click="edit">
+          <CogIcon
+            class="h-full w-full hover:text-slate-500"
+            @click="showEditModal"
+          />
+        </button>
+      </template>
+
       <template #body>
         <BoardContent :id="parseInt($route.params.id)" />
       </template>
@@ -56,6 +65,8 @@ import BoardContent from "./BoardContent.vue"
 import BoardListItem from "./BoardListItem.vue"
 import AddStory from "./partials/AddStory.vue"
 
+import { CogIcon } from "@heroicons/vue/outline"
+
 export default {
   components: {
     BoardListItem,
@@ -65,6 +76,7 @@ export default {
     BoardContent,
     AddStory,
     SidebarDrawer,
+    CogIcon,
   },
 
   data: () => ({
