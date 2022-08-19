@@ -1,5 +1,5 @@
 <template>
-  <div class="inline-block">
+  <div class="">
     <div class="w-56 min-w-56 h-full flex flex-col group p-2">
       <div class="flex items-center gap-4 mb-4 w-full">
         <span class="rounded-full bg-green-800 w-4 h-4" />
@@ -20,7 +20,7 @@
           <div
             v-for="task in tasks"
             :key="task.name"
-            class="rounded-md shadow-xl h-24 w-full bg-slate-100 p-4 flex flex-col justify-between"
+            class="rounded-md shadow-xl h-24 w-full bg-slate-100 p-4 flex flex-col justify-between flex-none"
           >
             <!-- content -->
             <p>

@@ -61,23 +61,30 @@ export default {
 
   methods: {
     openDrawer() {
-      this.open = true
-
       const { drawer, body } = this.$refs
 
-      // animate(drawer, { x: [-300, 0] }, { duration: 0.8, delay: 0.2 })
-      // animate(body, { x: [-300, 0] }, { duration: 0.8, delay: 0.2 })
-      console.log(drawer, body)
+      const { left } = body.getBoundingClientRect()
+      const { right } = drawer.getBoundingClientRect()
+
+      console.log(right, left)
+
+      animate(drawer, { x: [-300, 0] }, { duration: 0.5, delay: 0.2 })
+      animate(body, { x: [-300, 0] }, { duration: 0.5, delay: 0.2 })
+      this.open = true
     },
 
     closeDrawer() {
+      const { drawer, body } = this.$refs
+
+      const { left } = body.getBoundingClientRect()
+      const { right } = drawer.getBoundingClientRect()
+
+      animate(drawer, { x: [right, 0] }, { duration: 0.5, delay: 0.2 })
+      animate(body, { x: [left, 0] }, { duration: 0.5, delay: 0.2 })
+
       this.open = false
 
-      const { drawer, body } = this.$refs
-      animate(drawer, { x: [300, 0] }, { duration: 0.8, delay: 0.2 })
-      animate(body, { x: [300, 0] }, { duration: 0.8, delay: 0.2 })
-
-      console.log(drawer, body)
+      // console.log(drawer, body)
     },
   },
 }

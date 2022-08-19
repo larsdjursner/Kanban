@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-full w-full overflow-x-auto scrollbar bg-teal-50 flex shadow-inner rounded-md"
+    class="h-full w-full overflow-x-auto scrollbar flex shadow-inner rounded-md"
   >
     <StoryColumn v-for="story in stories" :key="story.id" :story="story" />
     <AddStory @addStory="addStory($event)" />

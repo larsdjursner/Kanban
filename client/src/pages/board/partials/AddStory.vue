@@ -1,5 +1,5 @@
 <template>
-  <div ref="addStory" class="h-96 flex flex-col">
+  <div ref="addStory" class="py-1 px-2 h-96 flex flex-col">
     <div
       ref="input"
       class="flex relative"
@@ -111,7 +111,7 @@ export default {
     },
 
     slideDown(element) {
-      animate(element, { y: [-20, 0] }, { duration: 0.3, delay: 0.1 })
+      animate(element, { y: [-40, 0] }, { duration: 0.3, delay: 0.1 })
     },
 
     slideUp(element) {

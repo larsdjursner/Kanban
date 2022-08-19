@@ -67,43 +67,49 @@ export default {
     SidebarDrawer,
   },
 
-  // async beforeRouteUpdate(to) {
-  //   await this.fetchBoard(to.params.id)
-  // },
-
   data: () => ({
     store: useStore(),
     showModal: false,
     editing: false,
   }),
 
-  async created() {
-    await this.fetchBoard()
-    await this.fetchBoards()
+  computed: {
+    currentId() {
+      return this.$route.params.id
+    },
+  },
+
+  watch: {
+    currentId() {
+      this.fetchBoard()
+    },
+  },
+
+  created() {
+    this.fetchBoard()
+    this.fetchBoards()
   },
 
   mounted() {
-    // this.appendAnimations()
+    this.appendAnimations()
     // this.scrollToBoard(this.$route.params.id)
   },
 
   methods: {
-    async fetchBoards() {
-      await this.$http.get("/boards").then(({ data }) => {
+    fetchBoards() {
+      this.$http.get("/boards").then(({ data }) => {
         this.store.setBoards(data)
-        // this.appendAnimations()
       })
     },
 
-    async fetchBoard(id = this.$route.params.id) {
-      await this.$http.get(`/boards/${id}`).then(({ data }) => {
+    fetchBoard(id = this.$route.params.id) {
+      this.$http.get(`/boards/${id}`).then(({ data }) => {
         this.store.setCurrentBoard(data)
       })
     },
 
     navigateToBoard(id) {
       this.$router.replace({ name: "board", params: { id } })
-      // this.$nextTick(() => this.scrollToBoard(board.id))
     },
 
     appendAnimations() {
@@ -116,11 +122,7 @@ export default {
       )
     },
 
-    // scrollToBoard(id) {
-    // const key = `board-${id}`
-    // const el = this.$refs["board-" + id][0].$el
-    // el.scrollIntoView({ behavior: "smooth" })
-    // },
+    scrollToBoard() {},
 
     showEditModal() {
       this.showModal = true
