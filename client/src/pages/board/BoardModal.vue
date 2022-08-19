@@ -174,7 +174,6 @@ export default {
     },
 
     deleteBoard(board) {
-      console.log(this.board)
       const { id } = board
       this.$http.delete(`/boards/${id}`).then(() => {
         this.store.deleteBoardById(id)

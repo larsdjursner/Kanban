@@ -1,21 +1,21 @@
 <template>
-  <button ref="btn" class="px-6" @click="click">
+  <TextButton @click="click">
     <p class="font-semibold">
       {{ "Create new board" }}
     </p>
-  </button>
+  </TextButton>
 </template>
 
 <script>
 import { animate } from "motion"
+import TextButton from "./buttons/TextButton.vue"
 
 export default {
+  components: { TextButton },
   emits: ["showModal"],
-
   methods: {
     click() {
       animate(this.$refs.btn, { scale: [1, 1.1, 1] })
-
       this.$emit("showModal")
     },
   },

@@ -7,7 +7,7 @@
       :exit="{ opacity: 0 }"
       class="z-50"
     >
-      <div class="fixed z-50 h-full w-full bg-black/70" @click="closeModal">
+      <div class="fixed z-50 h-screen w-screen bg-black/70" @click="closeModal">
         <div
           class="fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 h-1/2 w-1/2"
           @click.stop

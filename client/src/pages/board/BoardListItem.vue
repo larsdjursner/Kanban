@@ -9,7 +9,7 @@
 
       <div
         ref="content"
-        class="absolute inset-0 left-4 w-full flex items-center gap-2"
+        class="absolute inset-0 left-4 w-3/4 flex items-center gap-2"
       >
         <TemplateIcon
           class="h-4 w-4"
