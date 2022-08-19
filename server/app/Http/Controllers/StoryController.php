@@ -20,15 +20,6 @@ class StoryController extends Controller
             ->where('board_id', $boardId)
             ->get();
 
-        // Better solution for this?
-        foreach ($stories as $story) {
-            $tasks = Task::where('user_id', $userId)
-            ->where('story_id', $story->id)
-            ->get();
-
-            $story->tasks = $tasks;
-        }
-
         return response()->json($stories);
 
         return null;

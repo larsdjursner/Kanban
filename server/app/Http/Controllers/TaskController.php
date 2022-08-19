@@ -13,8 +13,10 @@ class TaskController extends Controller
         $userId = $request->user()->id;
         $storyId = $request->storyId;
 
+        // get all parent tasks only
         $tasks = Task::where('user_id', $userId)
             ->where('story_id', $storyId)
+            ->where('task_id', '=', null)
             ->get();
 
         return response()->json($tasks);
