@@ -2,38 +2,52 @@
   <div
     class="w-screen max-w-screen h-14 min-h-14 max-h-14 border-b py-2 px-4 flex items-center justify-between"
   >
-    <div>
-      <div v-if="currentBoard" class="flex items-center text-slate-600 gap-2">
-        <p class="text-xl font-semibold">{{ `${currentBoard.name}` }}</p>
-        <button @click="$emit('showModal')">
-          <CogIcon class="h-5 w-5" />
-        </button>
+    <div class="w-1/4">
+      <p class="text-xl font-semibold">Kanban</p>
+    </div>
+
+    <div class="w-1/2 flex">
+      <div class="flex gap-20 w-1/3">
+        <div v-if="currentBoard" class="flex items-center text-slate-600 gap-2">
+          <p class="text-xl font-semibold">{{ `${currentBoard.name}` }}</p>
+          <button @click="$emit('showModal')">
+            <CogIcon class="h-5 w-5" />
+          </button>
+        </div>
+      </div>
+
+      <div class="w-2/3">
+        <p class="text-xl font-semibold">
+          {{ `${auth.user.name}'s Workspace` }}
+        </p>
       </div>
     </div>
-    <p class="text-xl font-semibold">{{ `${auth.user.name}'s Workspace` }}</p>
-    <div class="flex items-center gap-6">
-      <Dropdown>
-        <template #button>
-          <button
-            class="bg-slate-200 focus:bg-slate-300 p-2 rounded-full flex justify-center items-center"
-          >
-            <UserIcon class="w-4 h-4" />
-          </button>
-        </template>
 
-        <template #menu>
-          <button
-            v-for="item in menu"
-            :key="item.name"
-            :ref="item.ref"
-            class="w-40 flex justify-between items-center py-2 px-4 hover:bg-slate-100"
-            @click="handleClick(item)"
-          >
-            <p>{{ item.text }}</p>
-            <component :is="item.icon" class="w-4 h-4" />
-          </button>
-        </template>
-      </Dropdown>
+    <div class="w-1/4">
+      <div class="flex items-center gap-6 justify-end">
+        <Dropdown>
+          <template #button>
+            <button
+              class="bg-slate-200 focus:bg-slate-300 p-2 rounded-full flex justify-center items-center"
+            >
+              <UserIcon class="w-4 h-4" />
+            </button>
+          </template>
+
+          <template #menu>
+            <button
+              v-for="item in menu"
+              :key="item.name"
+              :ref="item.ref"
+              class="w-40 flex justify-between items-center py-2 px-4 hover:bg-slate-100"
+              @click="handleClick(item)"
+            >
+              <p>{{ item.text }}</p>
+              <component :is="item.icon" class="w-4 h-4" />
+            </button>
+          </template>
+        </Dropdown>
+      </div>
     </div>
   </div>
 </template>
