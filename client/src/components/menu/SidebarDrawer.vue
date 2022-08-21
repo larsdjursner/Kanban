@@ -31,8 +31,8 @@
     <!-- body -->
     <div
       ref="body"
-      class="h-full pr-2 py-8 pl-10 relative"
-      :class="open ? 'w-3/4 pt-2' : 'w-full'"
+      class="h-full p-2 pb-8 pl-10 relative flex flex-col"
+      :class="open ? 'w-3/4' : 'w-full'"
     >
       <div class="absolute top-2 left-2 flex flex-col gap-2">
         <button v-if="!open" class="h-6 w-6" @click="openDrawer">
@@ -67,8 +67,9 @@ export default {
       // const { left } = body.getBoundingClientRect()
       // const { right } = drawer.getBoundingClientRect()
 
-      animate(drawer, { x: [-300, 0] }, { duration: 0.5, delay: 0.2 })
-      animate(body, { x: [-300, 0] }, { duration: 0.5, delay: 0.2 })
+      animate(drawer, { x: [-280, 0] }, { duration: 0.5 })
+      animate(body, { x: [-280, 0] }, { duration: 0.5 })
+
       this.open = true
     },
 
@@ -78,8 +79,8 @@ export default {
       const { left } = body.getBoundingClientRect()
       const { right } = drawer.getBoundingClientRect()
 
-      animate(drawer, { x: [right, 0] }, { duration: 0.5, delay: 0.2 })
-      animate(body, { x: [left, 0] }, { duration: 0.5, delay: 0.2 })
+      animate(drawer, { x: [right, 0] }, { duration: 0.5 })
+      animate(body, { x: [left, 0] }, { duration: 0.5 })
 
       this.open = false
     },

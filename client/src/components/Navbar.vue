@@ -7,19 +7,8 @@
     </div>
 
     <div class="w-1/2 flex">
-      <!-- <div class="flex gap-20 w-1/3">
-        <div v-if="currentBoard" class="flex items-center text-slate-600 gap-2">
-          <p class="text-xl font-semibold">{{ `${currentBoard.name}` }}</p>
-          <button @click="$emit('showModal')">
-            <CogIcon class="h-5 w-5" />
-          </button>
-        </div>
-      </div> -->
-
       <div class="w-2/3">
-        <p class="text-xl font-semibold">
-          {{ `${auth.user.name}'s Workspace` }}
-        </p>
+        <p class="text-lg font-semibold">{{ currentBoardName }}</p>
       </div>
     </div>
 
@@ -92,6 +81,10 @@ export default {
 
     currentBoard() {
       return this.store.getCurrentBoard
+    },
+
+    currentBoardName() {
+      return this.store.currentBoard ? this.store.currentBoard.name : ""
     },
   },
 
