@@ -2,13 +2,18 @@
   <div
     class="w-screen max-w-screen h-14 min-h-14 max-h-14 border-b py-2 px-4 flex items-center justify-between"
   >
-    <div class="w-1/4">
-      <p class="text-xl font-semibold">Kanban</p>
+    <div class="w-1/4 h-full">
+      <Logo />
     </div>
 
     <div class="w-1/2 flex">
       <div class="w-2/3">
-        <p class="text-lg font-semibold">{{ currentBoardName }}</p>
+        <p
+          v-if="isBoardNavigation"
+          class="text-lg font-semibold"
+        >
+          {{ currentBoardName }}
+        </p>
       </div>
     </div>
 
@@ -32,7 +37,10 @@
               @click="handleClick(item)"
             >
               <p>{{ item.text }}</p>
-              <component :is="item.icon" class="w-4 h-4" />
+              <component
+                :is="item.icon"
+                class="w-4 h-4"
+              />
             </button>
           </template>
         </Dropdown>
@@ -47,13 +55,9 @@ import { useStore } from "../stores/store"
 import { useAuth } from "../stores/auth"
 import TextButton from "./buttons/TextButton.vue"
 import Toggle from "./buttons/ThemeToggle.vue"
-import {
-  LogoutIcon,
-  UserIcon,
-  CogIcon,
-  ColorSwatchIcon,
-} from "@heroicons/vue/outline"
+import { LogoutIcon, UserIcon, CogIcon, ColorSwatchIcon } from "@heroicons/vue/outline"
 import Dropdown from "./menu/Dropdown.vue"
+import Logo from "./Logo.vue"
 
 export default {
   components: {
@@ -62,16 +66,15 @@ export default {
     UserIcon,
     Dropdown,
     CogIcon,
+    Logo,
   },
-
-  emits: ["showModal"],
 
   data: () => ({
     store: useStore(),
     auth: useAuth(),
-    showModal: false,
 
     menu: [],
+    logo: null,
   }),
 
   computed: {
@@ -86,6 +89,10 @@ export default {
     currentBoardName() {
       return this.store.currentBoard ? this.store.currentBoard.name : ""
     },
+
+    isBoardNavigation() {
+      return "board" === this.$route.name
+    },
   },
 
   created() {
@@ -94,7 +101,7 @@ export default {
         text: "Profile",
         ref: "profile",
         action: () => {
-          this.$router.push("/user")
+          this.$router.push("/userprofile")
         },
         icon: ColorSwatchIcon,
       },
@@ -113,7 +120,7 @@ export default {
         ref: "logout",
         action: () => {
           this.auth.logout()
-          this.$router.push("/")
+          this.$router.push("landing")
         },
         icon: LogoutIcon,
       },

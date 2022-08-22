@@ -41,7 +41,7 @@ export const useAuth = defineStore("auth", {
         "Authorization"
       ] = `${token.token_type} ${token.access_token}`
 
-      this.setAuth(token)
+      // this.setAuth(token)
 
       await api
         .get("/getuser")

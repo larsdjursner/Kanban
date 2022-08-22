@@ -5,40 +5,62 @@ const routes = [
   {
     path: "/",
     name: "landing",
-    component: () => import("./pages/Landing.vue"),
+    component: () => import("@/pages/landing/Landing.vue"),
   },
   {
     path: "/signin",
     name: "signin",
-    component: () => import("./pages/auth/SignIn.vue"),
+    component: () => import("@/pages/auth/SignIn.vue"),
   },
   {
     path: "/signup",
     name: "signup",
-    component: () => import("./pages/auth/SignUp.vue"),
+    component: () => import("@/pages/auth/SignUp.vue"),
   },
   {
     path: "/boards",
     name: "boards",
-    component: () => import("./pages/board/DefaultBoard.vue"),
+    component: () => import("@/pages/board/DefaultBoard.vue"),
     meta: { requiresAuth: true },
   },
   {
     path: "/boards/:id",
     name: "board",
-    component: () => import("./pages/board/KanbanBoard.vue"),
+    component: () => import("@/pages/board/KanbanBoard.vue"),
     meta: { requiresAuth: true },
   },
   {
-    path: "/user",
+    path: "/userprofile",
     name: "profile",
-    component: () => import("./pages/Profile.vue"),
+    component: () => import("@/pages/profile/Profile.vue"),
     meta: { requiresAuth: true },
+    children: [
+      {
+        path: "",
+        name: "usercustomize",
+        component: () => import("@/pages/profile/Customize.vue"),
+        meta: { requiresAuth: true },
+      },
+
+      {
+        path: "password",
+        name: "userpassword",
+        component: () => import("@/pages/profile/Password.vue"),
+        meta: { requiresAuth: true },
+      },
+
+      {
+        path: "security",
+        name: "usersecurity",
+        component: () => import("@/pages/profile/Security.vue"),
+        meta: { requiresAuth: true },
+      },
+    ],
   },
   {
     path: "/user/settings",
     name: "usersettings",
-    component: () => import("./pages/Settings.vue"),
+    component: () => import("@/pages/settings/Settings.vue"),
     meta: { requiresAuth: true },
   },
 ]
@@ -53,7 +75,7 @@ router.beforeEach(async (to, from, next) => {
   const auth = useAuth()
 
   if (auth.isAuth) {
-    if (to.name === "signup" || to.name === "signin") {
+    if (to.name === "signup" || to.name === "signin" || to.name === "landing") {
       next({ name: "boards" })
     } else {
       next()

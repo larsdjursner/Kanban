@@ -35,11 +35,11 @@
       :class="open ? 'w-3/4' : 'w-full'"
     >
       <div class="absolute top-2 left-2 flex flex-col gap-2">
+        <slot name="bodyOptions" />
+
         <button v-if="!open" class="h-6 w-6" @click="openDrawer">
           <EyeIcon class="h-full w-full hover:text-slate-500" />
         </button>
-
-        <slot name="bodyOptions" />
       </div>
 
       <slot name="body" />
